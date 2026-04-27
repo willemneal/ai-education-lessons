@@ -830,8 +830,10 @@ function fakeId(s) {
   return Math.abs(h) % 49999 + 100;
 }
 
+const APPLE_DEFAULTS = { en: "unbelievable strawberries", nl: "ongelofelijke aardbeien" };
+
 function renderApple() {
-  const text = document.getElementById('appleInput').value || (currentLang === 'en' ? "unbelievable strawberries" : "ongelofelijke aardbeien");
+  const text = document.getElementById('appleInput').value || APPLE_DEFAULTS[currentLang];
   const out = document.getElementById('slicesOut');
   const houseRow = document.getElementById('houseRow');
   out.innerHTML = '';
@@ -966,6 +968,7 @@ function langFromUrl() {
 }
 let currentLang = langFromUrl();
 function setLang(lang) {
+  const prevLang = currentLang;
   currentLang = lang;
   document.documentElement.lang = lang;
   const url = new URL(location.href);
@@ -974,6 +977,11 @@ function setLang(lang) {
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
+  // Swap example sentence if untouched (empty or matches the previous lang's default)
+  const appleInput = document.getElementById('appleInput');
+  if (appleInput.value === '' || appleInput.value === APPLE_DEFAULTS[prevLang]) {
+    appleInput.value = APPLE_DEFAULTS[lang];
+  }
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
     if (I18N[lang][k] !== undefined) el.textContent = I18N[lang][k];
@@ -1000,7 +1008,7 @@ document.getElementById('appleInput').addEventListener('input', renderApple);
 document.querySelectorAll('.lang-toggle button').forEach(b => {
   b.addEventListener('click', () => setLang(b.dataset.lang));
 });
-document.getElementById('appleInput').value = "unbelievable strawberries";
+document.getElementById('appleInput').value = APPLE_DEFAULTS[currentLang];
 setLang(currentLang);
 </script>
 </body>
