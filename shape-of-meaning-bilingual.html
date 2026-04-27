@@ -895,10 +895,18 @@ function renderScale() {
 }
 
 // ─── Language switching ─────────────────────────────────────
-let currentLang = 'en';
+const SUPPORTED_LANGS = ['en', 'nl'];
+function langFromUrl() {
+  const v = new URLSearchParams(location.search).get('lang');
+  return SUPPORTED_LANGS.includes(v) ? v : 'en';
+}
+let currentLang = langFromUrl();
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
@@ -938,11 +946,7 @@ document.querySelectorAll('.lang-toggle button').forEach(b => {
 
 // First paint
 document.getElementById('tokInput').value = 'unbelievable supercomputer';
-renderTokens();
-renderMap();
-renderDims();
-renderEq();
-renderPresetBtns();
+setLang(currentLang);
 renderScale();
 </script>
 </body>
