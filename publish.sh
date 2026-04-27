@@ -5,7 +5,7 @@
 set -euo pipefail
 
 REPO="ai-education-lessons"
-LESSONS=(shape-of-meaning.html shape-of-meaning-bilingual.html oma-explainer.html)
+LESSONS=(index.html shape-of-meaning.html shape-of-meaning-bilingual.html oma-explainer.html)
 
 cd "$(dirname "$0")"
 echo "=> working directory: $(pwd)"
@@ -101,7 +101,7 @@ fi
 SITE_URL=$(gh api "repos/$OWNER/$REPO/pages" -q .html_url 2>/dev/null || echo "https://$OWNER.github.io/$REPO/")
 SITE_URL="${SITE_URL%/}"
 echo
-echo "=> Live site (root will 404 — no index.html, by design):"
+echo "=> Live site (landing page lists all three lessons):"
 echo "     $SITE_URL/"
 echo
 echo "=> Direct lesson URLs:"

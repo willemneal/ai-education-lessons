@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Education — Interactive Lessons on Language Models</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f1830;
+  --ink-2: #161e3a;
+  --paper: #f3e8d2;
+  --paper-dim: #c9b896;
+  --paper-mute: #8a7a5f;
+  --amber: #e8b252;
+  --amber-deep: #c98e34;
+  --teal: #74bfb3;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Lora', Georgia, serif;
+  color: var(--paper);
+  background:
+    radial-gradient(ellipse at 15% 8%, rgba(232,178,82,0.10), transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(116,191,179,0.08), transparent 55%),
+    linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 28px 120px;
+}
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 24px;
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 64px);
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+  line-height: 1.05;
+}
+h1 em { color: var(--amber); font-style: italic; }
+.lede {
+  font-size: clamp(17px, 2.1vw, 19px);
+  color: var(--paper-dim);
+  max-width: 600px;
+  margin: 0 0 64px;
+}
+.cards { display: grid; gap: 20px; }
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 28px 30px;
+  border: 1px solid rgba(243,232,210,0.12);
+  border-radius: 4px;
+  background: rgba(15,24,48,0.4);
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+.card:hover {
+  border-color: var(--amber);
+  transform: translateY(-2px);
+  background: rgba(15,24,48,0.6);
+}
+.card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--paper-mute);
+  text-transform: uppercase;
+}
+.card h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 26px;
+  margin: 8px 0 10px;
+  letter-spacing: -0.005em;
+}
+.card h2 em { color: var(--amber); font-style: italic; }
+.card .desc {
+  color: var(--paper-dim);
+  font-size: 15.5px;
+  margin: 0;
+}
+.card .meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+footer {
+  margin-top: 72px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(243,232,210,0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--paper-mute);
+  text-transform: uppercase;
+}
+footer a { color: var(--paper-mute); text-decoration: none; border-bottom: 1px dotted var(--paper-mute); }
+footer a:hover { color: var(--amber); border-color: var(--amber); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kicker">A field guide · for the curious</div>
+<h1>the shape of <em>meaning</em></h1>
+<p class="lede">Three interactive lessons on how language models actually work — from tokens to embeddings to the geometry of meaning. No math required.</p>
+
+<div class="cards">
+
+  <a class="card" href="shape-of-meaning.html">
+    <div class="num">01 · seven chapters</div>
+    <h2>The Shape of <em>Meaning</em></h2>
+    <p class="desc">A 3D, scrollable walkthrough of word embeddings, vector arithmetic, and attention. The full version, in English.</p>
+    <div class="meta">EN · interactive</div>
+  </a>
+
+  <a class="card" href="shape-of-meaning-bilingual.html">
+    <div class="num">02 · seven sections</div>
+    <h2>The Shape of <em>Meaning</em> · bilingual</h2>
+    <p class="desc">A flat, two-dimensional companion to the lesson above, with an English / Dutch language toggle.</p>
+    <div class="meta">EN · NL · interactive</div>
+  </a>
+
+  <a class="card" href="oma-explainer.html">
+    <div class="num">03 · five gentle steps</div>
+    <h2>A kitchen-table <em>explainer</em></h2>
+    <p class="desc">The same ideas told to a non-technical reader: apples, houses on a street, and a spice rack. EN / NL.</p>
+    <div class="meta">EN · NL · gentle</div>
+  </a>
+
+</div>
+
+<footer>
+  source · <a href="https://github.com/willemneal/ai-education-lessons">github</a>
+</footer>
+
+</div>
+</body>
+</html>

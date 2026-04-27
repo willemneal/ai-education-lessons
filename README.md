@@ -6,12 +6,22 @@ Three interactive HTML lessons on how language models work.
 - **shape-of-meaning-bilingual.html** — English/Dutch adaptation with a language toggle.
 - **oma-explainer.html** — A kitchen-table version for non-technical readers, in five gentle steps. EN/NL bilingual.
 
-## Live URLs
+## Live site
 
-Once GitHub Pages is enabled (run `./publish.sh`), each lesson is at:
+The landing page lists all three lessons:
 
-- `https://<owner>.github.io/ai-education-lessons/shape-of-meaning.html`
-- `https://<owner>.github.io/ai-education-lessons/shape-of-meaning-bilingual.html`
-- `https://<owner>.github.io/ai-education-lessons/oma-explainer.html`
+- **<https://willemneal.github.io/ai-education-lessons/>**
 
-The repository root has no `index.html`, so the bare URL will 404 — go directly to one of the lesson pages above.
+Direct lesson URLs:
+
+- `https://willemneal.github.io/ai-education-lessons/shape-of-meaning.html`
+- `https://willemneal.github.io/ai-education-lessons/shape-of-meaning-bilingual.html`
+- `https://willemneal.github.io/ai-education-lessons/oma-explainer.html`
+
+Append `?lang=nl` to either bilingual page to open it in Dutch.
+
+## Deploy
+
+- `./publish.sh` is the one-time bootstrap: it creates the public repo, seeds the `gh-pages` branch, and enables GitHub Pages.
+- After that, every push to `main` is auto-deployed by `.github/workflows/deploy.yml`.
+- Every pull request gets a preview at `…/pr-preview/pr-N/`, posted to the PR by `.github/workflows/pr-preview.yml`.
