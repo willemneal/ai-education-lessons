@@ -401,7 +401,7 @@ footer {
 <div class="wrap">
 
 <header class="top">
-  <div class="brand" data-i18n="brand">A field guide to language models</div>
+  <div class="brand" data-i18n="brand">A field guide for the curious</div>
   <div class="lang-toggle" role="tablist">
     <button data-lang="en" class="active">EN</button>
     <button data-lang="nl">NL</button>
@@ -409,16 +409,16 @@ footer {
 </header>
 
 <div class="hero">
-  <div class="kicker" data-i18n="kicker">Chapter one · The basics</div>
-  <h1 data-i18n-html="heroTitle">The Shape of <em>Meaning</em></h1>
-  <p class="lede" data-i18n-html="heroLede">When you type a sentence to an AI, what does it actually <em>see</em>? Not letters. Not even words. It sees a map — and the closer two ideas live on that map, the more the AI thinks they belong together.</p>
+  <div class="kicker" data-i18n="kicker">A field guide · for the curious</div>
+  <h1 data-i18n-html="heroTitle">the shape of <em>meaning</em></h1>
+  <p class="lede" data-i18n-html="heroLede">How language models turn words into points in space — and why that turns out to be almost everything.</p>
 </div>
 
 <section>
-  <div class="fig-tag"><span class="num">Fig 01</span> · <span data-i18n="fig01">Cutting words into pieces</span></div>
-  <h2 data-i18n-html="s1Title">First, words get <em>chopped up</em>.</h2>
-  <p class="body" data-i18n="s1p1">Computers don't read whole words. They cut text into smaller chunks called <strong>tokens</strong>. Common words stay whole. Long or rare ones get split into pieces.</p>
-  <p class="body" data-i18n="s1p2">Try typing something below — even nonsense words — and watch how it splits.</p>
+  <div class="fig-tag"><span class="num">Fig 01</span> · <span data-i18n="fig01">Tokenizer</span></div>
+  <h2 data-i18n-html="s1Title">First, chop the sentence up.</h2>
+  <p class="body" data-i18n="s1p1">Before the model can place words on its map, it has to decide what counts as a "word." The answer is awkward: not quite words, not quite letters. These in-between pieces are called <strong>tokens</strong>.</p>
+  <p class="body" data-i18n="s1p2">Common words are usually one token. Rare words get chopped into several. Try it — type anything:</p>
   <div class="card">
     <div class="input-row">
       <input id="tokInput" type="text" data-i18n-attr="placeholder" data-i18n-placeholder="s1ph" placeholder="Try: unbelievable, supercomputer, hello world">
@@ -434,9 +434,9 @@ footer {
 </section>
 
 <section>
-  <div class="fig-tag"><span class="num">Fig 02</span> · <span data-i18n="fig02">Pieces become numbers</span></div>
-  <h2 data-i18n-html="s2Title">Each piece gets a <em>number</em>.</h2>
-  <p class="body" data-i18n="s2p1">The model has a giant dictionary — usually 30,000 to 100,000 entries. Every piece has its own ID. That's it. From here on, the AI works with numbers, never letters.</p>
+  <div class="fig-tag"><span class="num">Fig 02</span> · <span data-i18n="fig02">Tokens become IDs</span></div>
+  <h2 data-i18n-html="s2Title">Each token gets an <em>ID</em>.</h2>
+  <p class="body" data-i18n="s2p1">Each token has an ID — a number between 0 and about 100,000. The number itself means nothing yet. It's just a label for this particular chunk of text. From here on, the model works with numbers, never letters.</p>
   <div class="card">
     <div class="id-row" id="idRow"></div>
   </div>
@@ -444,9 +444,9 @@ footer {
 
 <section>
   <div class="fig-tag"><span class="num">Fig 03</span> · <span data-i18n="fig03">A map of meaning</span></div>
-  <h2 data-i18n-html="s3Title">Then numbers become <em>positions on a map</em>.</h2>
-  <p class="body" data-i18n="s3p1">Here's the magic step. Each ID gets turned into a position in a vast space. Words with similar meanings end up close together. Words about different things end up far apart.</p>
-  <p class="body" data-i18n="s3p2">Real models use thousands of dimensions, but here's a flat, two-dimensional version so you can see what's happening:</p>
+  <h2 data-i18n-html="s3Title">Hundreds of numbers become a <em>place</em>.</h2>
+  <p class="body" data-i18n="s3p1">The model looks up each token's ID in a huge table. Out comes a long list of numbers — hundreds, sometimes thousands, long. This list is the token's <strong>vector</strong>, or <em>embedding</em>. Think of it like GPS coordinates: on Earth you need two numbers to pin down a location; in the world of meaning, you need hundreds.</p>
+  <p class="body" data-i18n="s3p2">Those vectors aren't random. When you plot all the words using their vectors, they cluster — food in one neighborhood, animals in another, emotions in a third. Real models use hundreds of dimensions, which is impossible to draw. Here's a flat, two-dimensional version so you can see the shape:</p>
   <div class="map-wrap">
     <svg class="map-svg" viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" id="mapSvg"></svg>
   </div>
@@ -454,9 +454,9 @@ footer {
 </section>
 
 <section>
-  <div class="fig-tag"><span class="num">Fig 04</span> · <span data-i18n="fig04">Dimensions as features</span></div>
-  <h2 data-i18n-html="s4Title">Each direction means <em>something</em>.</h2>
-  <p class="body" data-i18n="s4p1">A position on the map isn't random. Each direction (each "dimension") tracks something — like how alive a thing is, or how big, or how warm. Pick a word and see how it scores on a few sample dimensions:</p>
+  <div class="fig-tag"><span class="num">Fig 04</span> · <span data-i18n="fig04">One dimension at a time</span></div>
+  <h2 data-i18n-html="s4Title">Each number tracks <em>one kind of meaning</em>.</h2>
+  <p class="body" data-i18n="s4p1">Here's the beautiful part. The model isn't told what the dimensions should mean. It figures them out on its own, from seeing billions of sentences. The dimensions often correspond to <em>real</em> qualities — size, gender, temperature, age, formality. Pick a word and see how it sits along a few sample dimensions:</p>
   <div class="card">
     <div class="dim-demo">
       <select id="dimWord" class="dim-row">
@@ -489,13 +489,13 @@ footer {
       </div>
     </div>
   </div>
-  <p class="body" data-i18n="s4p2">In a real model there aren't four directions — there are thousands. And nobody hand-picks what they mean. The model figures them out by reading huge amounts of text.</p>
+  <p class="body" data-i18n="s4p2">In a real model there are hundreds of these axes, layered together. A single word gets a position along <em>all</em> of them at once. That's how "queen" can be close to "king" along the royalty dimension while also being close to "woman" along the gender dimension — no contradiction. Space is just that big.</p>
 </section>
 
 <section>
-  <div class="fig-tag"><span class="num">Fig 05</span> · <span data-i18n="fig05">Doing math with meaning</span></div>
-  <h2 data-i18n-html="s5Title">Now the <em>strange part</em>.</h2>
-  <p class="body" data-i18n="s5p1">Once words are positions, you can do <strong>arithmetic</strong> on them. Add and subtract meanings the way you'd add and subtract numbers. The most famous example:</p>
+  <div class="fig-tag"><span class="num">Fig 05</span> · <span data-i18n="fig05">The magic trick</span></div>
+  <h2 data-i18n-html="s5Title">Relationships become <em>directions</em>.</h2>
+  <p class="body" data-i18n="s5p1">Once words live on a map, the <em>relationships</em> between them become directions you can travel. The step that takes you from <em>France</em> to <em>Paris</em> is about the same step that takes you from <em>Italy</em> to <em>Rome</em>. Same direction. Same distance. The model learned "capital of" as a little arrow you can add or subtract. This lets you do arithmetic with meanings, which sounds impossible but works:</p>
   <div class="eq" id="eqDisplay">
     <span class="word">king</span>
     <span class="op">−</span>
@@ -506,28 +506,28 @@ footer {
     <span class="result">queen</span>
   </div>
   <div class="preset-btns" id="presetBtns"></div>
-  <p class="body" data-i18n="s5p2">Take "king," subtract the meaning of "man," add the meaning of "woman" — you land on "queen." Nobody told the model that. It learned the shape of meaning from billions of sentences, and royalty plus gender just lined up.</p>
+  <p class="body" data-i18n="s5p2">Take "king," subtract the meaning of "man," add the meaning of "woman" — you land on "queen." Nobody told the model that "royalty plus gender" was a direction. It learned it from reading billions of sentences, and the geometry just lined up.</p>
 </section>
 
 <section>
   <div class="fig-tag"><span class="num">Fig 06</span> · <span data-i18n="fig06">The real scale</span></div>
-  <h2 data-i18n-html="s6Title">How big is this <em>map</em>, really?</h2>
-  <p class="body" data-i18n="s6p1">Our examples used 2 dimensions. Real language models use thousands. Here are some real numbers:</p>
+  <h2 data-i18n-html="s6Title">How big are <em>real vectors</em>?</h2>
+  <p class="body" data-i18n="s6p1">Our examples showed two dimensions. Real models use far more. Each bar below is scaled to show how many numbers make up a single token's vector:</p>
   <div class="card">
     <div class="scale-bars" id="scaleBars"></div>
   </div>
-  <p class="body" data-i18n="s6p2">Every token sits inside a space with thousands of directions. The "shape of meaning" is wildly more detailed than anything we can draw. But the idea is the same: <strong>closeness equals relatedness</strong>.</p>
+  <p class="body" data-i18n="s6p2">Models also differ in how many tokens they recognize (their <em>vocabulary</em> — 32K to 128K unique tokens) and how much text they can read at once (their <em>context window</em> — from 1K tokens in early GPT-2 up to 10 million in Llama 4 Scout).</p>
 </section>
 
 <section>
   <div class="fig-tag"><span class="num">Fig 07</span> · <span data-i18n="fig07">Putting it together</span></div>
-  <h2 data-i18n-html="s7Title">So when you type a sentence…</h2>
-  <p class="body" data-i18n="s7p1">…the model chops it into pieces, looks each one up, finds its position in the meaning-space, and then uses all those positions together to figure out what should come next. The whole conversation — every reply you've ever read from an AI — boils down to <strong>geometry</strong>.</p>
-  <p class="body" data-i18n="s7p2">Words you thought were just symbols turn out to have a shape. And meaning, it turns out, is a place.</p>
+  <h2 data-i18n-html="s7Title">And that's the whole thing.</h2>
+  <p class="body" data-i18n="s7p1">Break text into tokens. Turn each token into a vector of numbers. Use the vectors to place words on a vast map where nearness means similarity of meaning. Read the result.</p>
+  <p class="body" data-i18n="s7p2">There's no understanding inside, in the human sense. No pictures, no memories, no felt sense of what <em>dog</em> is. Just geometry — remarkably rich, learned-from-the-shape-of-all-our-writing geometry. And somehow, it's enough.</p>
 </section>
 
 <footer>
-  <span data-i18n="footer">A small lesson · made with care</span>
+  <span data-i18n="footer">the shape of meaning · an interactive field guide</span>
 </footer>
 
 </div>
@@ -535,91 +535,91 @@ footer {
 <script>
 const I18N = {
   en: {
-    brand: "A field guide to language models",
-    kicker: "Chapter one · The basics",
-    heroTitle: 'The Shape of <em>Meaning</em>',
-    heroLede: 'When you type a sentence to an AI, what does it actually <em>see</em>? Not letters. Not even words. It sees a map — and the closer two ideas live on that map, the more the AI thinks they belong together.',
-    fig01: "Cutting words into pieces",
-    s1Title: 'First, words get <em>chopped up</em>.',
-    s1p1: "Computers don't read whole words. They cut text into smaller chunks called <b>tokens</b>. Common words stay whole. Long or rare ones get split into pieces.",
-    s1p2: "Try typing something below — even nonsense words — and watch how it splits.",
+    brand: "A field guide for the curious",
+    kicker: "A field guide · for the curious",
+    heroTitle: 'the shape of <em>meaning</em>',
+    heroLede: 'How language models turn words into points in space — and why that turns out to be almost everything.',
+    fig01: "Tokenizer",
+    s1Title: 'First, chop the sentence up.',
+    s1p1: 'Before the model can place words on its map, it has to decide what counts as a "word." The answer is awkward: not quite words, not quite letters. These in-between pieces are called <strong>tokens</strong>.',
+    s1p2: "Common words are usually one token. Rare words get chopped into several. Try it — type anything:",
     s1ph: "Try: unbelievable, supercomputer, hello world",
     legendWhole: "whole word",
     legendPiece: "word piece",
     legendEnd: "ending",
     legendOther: "other",
-    fig02: "Pieces become numbers",
-    s2Title: 'Each piece gets a <em>number</em>.',
-    s2p1: "The model has a giant dictionary — usually 30,000 to 100,000 entries. Every piece has its own ID. That's it. From here on, the AI works with numbers, never letters.",
+    fig02: "Tokens become IDs",
+    s2Title: 'Each token gets an <em>ID</em>.',
+    s2p1: "Each token has an ID — a number between 0 and about 100,000. The number itself means nothing yet. It's just a label for this particular chunk of text. From here on, the model works with numbers, never letters.",
     fig03: "A map of meaning",
-    s3Title: 'Then numbers become <em>positions on a map</em>.',
-    s3p1: "Here's the magic step. Each ID gets turned into a position in a vast space. Words with similar meanings end up close together. Words about different things end up far apart.",
-    s3p2: "Real models use thousands of dimensions, but here's a flat, two-dimensional version so you can see what's happening:",
-    fig04: "Dimensions as features",
-    s4Title: 'Each direction means <em>something</em>.',
-    s4p1: 'A position on the map isn\'t random. Each direction (each "dimension") tracks something — like how alive a thing is, or how big, or how warm. Pick a word and see how it scores on a few sample dimensions:',
-    s4p2: "In a real model there aren't four directions — there are thousands. And nobody hand-picks what they mean. The model figures them out by reading huge amounts of text.",
+    s3Title: 'Hundreds of numbers become a <em>place</em>.',
+    s3p1: "The model looks up each token's ID in a huge table. Out comes a long list of numbers — hundreds, sometimes thousands, long. This list is the token's <strong>vector</strong>, or <em>embedding</em>. Think of it like GPS coordinates: on Earth you need two numbers to pin down a location; in the world of meaning, you need hundreds.",
+    s3p2: "Those vectors aren't random. When you plot all the words using their vectors, they cluster — food in one neighborhood, animals in another, emotions in a third. Real models use hundreds of dimensions, which is impossible to draw. Here's a flat, two-dimensional version so you can see the shape:",
+    fig04: "One dimension at a time",
+    s4Title: 'Each number tracks <em>one kind of meaning</em>.',
+    s4p1: "Here's the beautiful part. The model isn't told what the dimensions should mean. It figures them out on its own, from seeing billions of sentences. The dimensions often correspond to <em>real</em> qualities — size, gender, temperature, age, formality. Pick a word and see how it sits along a few sample dimensions:",
+    s4p2: 'In a real model there are hundreds of these axes, layered together. A single word gets a position along <em>all</em> of them at once. That\'s how "queen" can be close to "king" along the royalty dimension while also being close to "woman" along the gender dimension — no contradiction. Space is just that big.',
     dimSmall: "small", dimBig: "big",
     dimDead: "not alive", dimAlive: "alive",
     dimCold: "cold", dimWarm: "warm",
     dimSoft: "soft", dimHard: "hard",
-    fig05: "Doing math with meaning",
-    s5Title: 'Now the <em>strange part</em>.',
-    s5p1: "Once words are positions, you can do <b>arithmetic</b> on them. Add and subtract meanings the way you'd add and subtract numbers. The most famous example:",
-    s5p2: 'Take "king," subtract the meaning of "man," add the meaning of "woman" — you land on "queen." Nobody told the model that. It learned the shape of meaning from billions of sentences, and royalty plus gender just lined up.',
+    fig05: "The magic trick",
+    s5Title: 'Relationships become <em>directions</em>.',
+    s5p1: 'Once words live on a map, the <em>relationships</em> between them become directions you can travel. The step that takes you from <em>France</em> to <em>Paris</em> is about the same step that takes you from <em>Italy</em> to <em>Rome</em>. Same direction. Same distance. The model learned "capital of" as a little arrow you can add or subtract. This lets you do arithmetic with meanings, which sounds impossible but works:',
+    s5p2: 'Take "king," subtract the meaning of "man," add the meaning of "woman" — you land on "queen." Nobody told the model that "royalty plus gender" was a direction. It learned it from reading billions of sentences, and the geometry just lined up.',
     fig06: "The real scale",
-    s6Title: 'How big is this <em>map</em>, really?',
-    s6p1: "Our examples used 2 dimensions. Real language models use thousands. Here are some real numbers:",
-    s6p2: 'Every token sits inside a space with thousands of directions. The "shape of meaning" is wildly more detailed than anything we can draw. But the idea is the same: <b>closeness equals relatedness</b>.',
+    s6Title: 'How big are <em>real vectors</em>?',
+    s6p1: "Our examples showed two dimensions. Real models use far more. Each bar below is scaled to show how many numbers make up a single token's vector:",
+    s6p2: 'Models also differ in how many tokens they recognize (their <em>vocabulary</em> — 32K to 128K unique tokens) and how much text they can read at once (their <em>context window</em> — from 1K tokens in early GPT-2 up to 10 million in Llama 4 Scout).',
     fig07: "Putting it together",
-    s7Title: "So when you type a sentence…",
-    s7p1: "…the model chops it into pieces, looks each one up, finds its position in the meaning-space, and then uses all those positions together to figure out what should come next. The whole conversation — every reply you've ever read from an AI — boils down to <b>geometry</b>.",
-    s7p2: "Words you thought were just symbols turn out to have a shape. And meaning, it turns out, is a place.",
-    footer: "A small lesson · made with care",
-    mapClusters: { animals: "animals", royalty: "royalty", food: "food", tech: "tech", emotions: "feelings", vehicles: "vehicles" }
+    s7Title: "And that's the whole thing.",
+    s7p1: "Break text into tokens. Turn each token into a vector of numbers. Use the vectors to place words on a vast map where nearness means similarity of meaning. Read the result.",
+    s7p2: "There's no understanding inside, in the human sense. No pictures, no memories, no felt sense of what <em>dog</em> is. Just geometry — remarkably rich, learned-from-the-shape-of-all-our-writing geometry. And somehow, it's enough.",
+    footer: "the shape of meaning · an interactive field guide",
+    mapClusters: { animals: "animals", royalty: "royalty", food: "food", tech: "tech", emotions: "emotions", vehicles: "vehicles" }
   },
   nl: {
-    brand: "Een veldgids voor taalmodellen",
-    kicker: "Hoofdstuk een · De basis",
-    heroTitle: 'De Vorm van <em>Betekenis</em>',
-    heroLede: 'Wanneer je een zin naar een AI tikt, wat <em>ziet</em> hij eigenlijk? Geen letters. Zelfs geen woorden. Hij ziet een kaart — en hoe dichter twee ideeën op die kaart bij elkaar liggen, hoe meer de AI denkt dat ze bij elkaar horen.',
-    fig01: "Woorden in stukjes knippen",
-    s1Title: 'Eerst worden woorden <em>opgeknipt</em>.',
-    s1p1: "Computers lezen geen hele woorden. Ze knippen tekst in kleinere stukjes, <b>tokens</b> genoemd. Veelgebruikte woorden blijven heel. Lange of zeldzame woorden worden in stukjes geknipt.",
-    s1p2: "Tik hieronder iets in — desnoods onzin — en zie hoe het opgeknipt wordt.",
+    brand: "Een veldgids voor de nieuwsgierige",
+    kicker: "Een veldgids · voor de nieuwsgierige",
+    heroTitle: 'de vorm van <em>betekenis</em>',
+    heroLede: 'Hoe taalmodellen woorden veranderen in punten in een ruimte — en waarom dat bijna alles blijkt te zijn.',
+    fig01: "Tokenizer",
+    s1Title: 'Knip eerst de zin in stukjes.',
+    s1p1: 'Voordat het model woorden op zijn kaart kan plaatsen, moet het beslissen wat als een "woord" telt. Het antwoord is onhandig: niet helemaal woorden, niet helemaal letters. Deze tussenstukjes heten <strong>tokens</strong>.',
+    s1p2: "Veelvoorkomende woorden zijn meestal één token. Zeldzame woorden worden in meerdere stukken gehakt. Probeer het — tik wat in:",
     s1ph: "Probeer: ongelofelijk, supercomputer, hallo wereld",
     legendWhole: "heel woord",
     legendPiece: "woordstukje",
     legendEnd: "uitgang",
     legendOther: "overig",
-    fig02: "Stukjes worden nummers",
-    s2Title: 'Elk stukje krijgt een <em>nummer</em>.',
-    s2p1: "Het model heeft een gigantisch woordenboek — meestal 30.000 tot 100.000 ingangen. Elk stukje heeft zijn eigen ID. Dat is alles. Vanaf hier werkt de AI alleen nog met getallen, nooit meer met letters.",
+    fig02: "Tokens worden IDs",
+    s2Title: 'Elk token krijgt een <em>ID</em>.',
+    s2p1: "Elk token heeft een ID — een getal tussen 0 en ongeveer 100.000. Het getal zelf betekent nog niets. Het is gewoon een label voor dit specifieke stukje tekst. Vanaf hier werkt het model met getallen, nooit meer met letters.",
     fig03: "Een kaart van betekenis",
-    s3Title: 'Dan worden getallen <em>plekken op een kaart</em>.',
-    s3p1: "Hier komt de magische stap. Elke ID wordt omgezet in een positie in een enorme ruimte. Woorden met vergelijkbare betekenis komen dicht bij elkaar te liggen. Woorden over verschillende dingen komen ver uit elkaar te liggen.",
-    s3p2: "Echte modellen gebruiken duizenden dimensies, maar hier is een platte, tweedimensionale versie zodat je kunt zien wat er gebeurt:",
-    fig04: "Dimensies als eigenschappen",
-    s4Title: 'Elke richting betekent <em>iets</em>.',
-    s4p1: 'Een positie op de kaart is niet willekeurig. Elke richting (elke "dimensie") staat ergens voor — bijvoorbeeld hoe levend iets is, of hoe groot, of hoe warm. Kies een woord en zie hoe het scoort op een paar voorbeelddimensies:',
-    s4p2: "In een echt model zijn er geen vier richtingen — maar duizenden. En niemand kiest met de hand wat ze betekenen. Het model leert ze zelf door enorme hoeveelheden tekst te lezen.",
+    s3Title: 'Honderden getallen worden een <em>plek</em>.',
+    s3p1: "Het model zoekt de ID van elk token op in een gigantische tabel. Daar komt een lange lijst getallen uit — honderden, soms duizenden, lang. Deze lijst is de <strong>vector</strong> van het token, ofwel zijn <em>embedding</em>. Zie het als GPS-coördinaten: op aarde heb je twee getallen nodig om een locatie aan te wijzen; in de wereld van betekenis heb je er honderden nodig.",
+    s3p2: "Die vectoren zijn niet willekeurig. Wanneer je alle woorden uitzet aan de hand van hun vectoren, vormen ze clusters — eten in de ene buurt, dieren in de andere, gevoelens in een derde. Echte modellen gebruiken honderden dimensies, wat onmogelijk te tekenen is. Hier is een platte, tweedimensionale versie zodat je de vorm kunt zien:",
+    fig04: "Eén dimensie tegelijk",
+    s4Title: 'Elk getal volgt <em>één soort betekenis</em>.',
+    s4p1: "Hier komt het mooie deel. Niemand vertelt het model wat de dimensies moeten betekenen. Het bedenkt ze zelf, door miljarden zinnen te lezen. De dimensies komen vaak overeen met <em>echte</em> eigenschappen — grootte, geslacht, temperatuur, leeftijd, formaliteit. Kies een woord en zie hoe het ligt langs een paar voorbeelddimensies:",
+    s4p2: 'In een echt model zijn er honderden van deze assen, op elkaar gestapeld. Eén woord krijgt tegelijkertijd een positie langs <em>al</em> die assen. Zo kan "koningin" dicht bij "koning" liggen op de koninklijkheidsdimensie en tegelijk dicht bij "vrouw" op de geslachtsdimensie — geen tegenstrijdigheid. De ruimte is gewoon zo groot.',
     dimSmall: "klein", dimBig: "groot",
     dimDead: "niet levend", dimAlive: "levend",
     dimCold: "koud", dimWarm: "warm",
     dimSoft: "zacht", dimHard: "hard",
-    fig05: "Rekenen met betekenis",
-    s5Title: 'Nu het <em>vreemde stuk</em>.',
-    s5p1: "Als woorden eenmaal posities zijn, kun je er <b>mee rekenen</b>. Betekenissen optellen en aftrekken zoals je dat met getallen doet. Het beroemdste voorbeeld:",
-    s5p2: 'Neem "koning," trek de betekenis van "man" eraf, tel de betekenis van "vrouw" erbij — en je belandt op "koningin." Niemand heeft het model dat verteld. Het heeft de vorm van betekenis geleerd uit miljarden zinnen, en koninklijkheid plus geslacht vielen vanzelf op hun plek.',
+    fig05: "De magische truc",
+    s5Title: 'Relaties worden <em>richtingen</em>.',
+    s5p1: 'Zodra woorden op een kaart staan, worden de <em>relaties</em> tussen hen richtingen waarlangs je kunt reizen. De stap die je van <em>Frankrijk</em> naar <em>Parijs</em> brengt is ongeveer dezelfde stap die je van <em>Italië</em> naar <em>Rome</em> brengt. Dezelfde richting. Dezelfde afstand. Het model leerde "hoofdstad van" als een klein pijltje dat je kunt optellen of aftrekken. Hierdoor kun je rekenen met betekenissen, wat onmogelijk klinkt maar werkt:',
+    s5p2: 'Neem "koning," trek de betekenis van "man" eraf, tel de betekenis van "vrouw" erbij — en je belandt op "koningin." Niemand heeft het model verteld dat "koninklijkheid plus geslacht" een richting was. Het heeft het geleerd uit het lezen van miljarden zinnen, en de meetkunde viel vanzelf op zijn plaats.',
     fig06: "De echte schaal",
-    s6Title: 'Hoe groot is deze <em>kaart</em> eigenlijk?',
-    s6p1: "Onze voorbeelden gebruikten 2 dimensies. Echte taalmodellen gebruiken er duizenden. Hier zijn wat echte getallen:",
-    s6p2: 'Elk token zit in een ruimte met duizenden richtingen. De "vorm van betekenis" is veel gedetailleerder dan we ooit kunnen tekenen. Maar het idee is hetzelfde: <b>nabijheid is verwantschap</b>.',
+    s6Title: 'Hoe groot zijn <em>echte vectoren</em>?',
+    s6p1: "Onze voorbeelden lieten twee dimensies zien. Echte modellen gebruiken er veel meer. Elke balk hieronder is geschaald om te tonen uit hoeveel getallen één tokenvector bestaat:",
+    s6p2: 'Modellen verschillen ook in hoeveel tokens ze herkennen (hun <em>vocabulaire</em> — 32K tot 128K unieke tokens) en hoeveel tekst ze in één keer kunnen lezen (hun <em>contextvenster</em> — van 1K tokens in de vroege GPT-2 tot 10 miljoen in Llama 4 Scout).',
     fig07: "Alles samen",
-    s7Title: "Dus als je een zin tikt…",
-    s7p1: "…knipt het model hem in stukjes, zoekt elk stukje op, vindt zijn positie in de betekenisruimte, en gebruikt al die posities samen om uit te rekenen wat er als volgende moet komen. Het hele gesprek — elk antwoord dat je ooit van een AI hebt gelezen — komt neer op <b>meetkunde</b>.",
-    s7p2: "Woorden waarvan je dacht dat het maar symbolen waren, blijken een vorm te hebben. En betekenis, zo blijkt, is een plek.",
-    footer: "Een klein lesje · met zorg gemaakt",
+    s7Title: "En dat is het hele verhaal.",
+    s7p1: "Knip tekst op in tokens. Verander elk token in een vector van getallen. Gebruik de vectoren om woorden op een uitgestrekte kaart te plaatsen waar nabijheid betekenisovereenkomst is. Lees het resultaat.",
+    s7p2: "Er zit geen begrip in, in de menselijke zin. Geen plaatjes, geen herinneringen, geen gevoeld besef van wat <em>hond</em> is. Alleen meetkunde — opmerkelijk rijke, geleerd-uit-de-vorm-van-al-ons-schrijven meetkunde. En op de een of andere manier is dat genoeg.",
+    footer: "de vorm van betekenis · een interactieve veldgids",
     mapClusters: { animals: "dieren", royalty: "koninklijk", food: "eten", tech: "technologie", emotions: "gevoelens", vehicles: "voertuigen" }
   }
 };
@@ -701,6 +701,9 @@ const PRESETS = {
   ]
 };
 
+// ─── Default example sentences per language ─────────────────
+const TOK_DEFAULTS = { en: 'unbelievable supercomputer', nl: 'ongelofelijke supercomputer' };
+
 // ─── Tokenizer (toy) ────────────────────────────────────────
 const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","do","be","have","has","had","not","yes","no","hello","world","cat","dog","run","walk","big","small","good","bad","happy","sad","de","het","een","en","of","maar","ik","jij","wij","zij","is","ben","bent","zijn","was","waren","de","met","op","in","aan","voor","mijn","jouw","onze","hallo","wereld","kat","hond","ren","loop","groot","klein","goed","slecht","blij","verdrietig"]);
 const SUFFIXES = ["ing","ly","ed","est","er","tion","able","ness","ment","ish","ung","heid","lijk","baar"];
@@ -760,7 +763,7 @@ function fakeId(s) {
   return Math.abs(h) % 49999 + 100;
 }
 function renderTokens() {
-  const text = document.getElementById('tokInput').value || (currentLang === 'en' ? 'unbelievable supercomputer' : 'ongelofelijke supercomputer');
+  const text = document.getElementById('tokInput').value || TOK_DEFAULTS[currentLang];
   const out = document.getElementById('tokOut');
   const idRow = document.getElementById('idRow');
   const tokens = tokenize(text);
@@ -895,13 +898,27 @@ function renderScale() {
 }
 
 // ─── Language switching ─────────────────────────────────────
-let currentLang = 'en';
+const SUPPORTED_LANGS = ['en', 'nl'];
+function langFromUrl() {
+  const v = new URLSearchParams(location.search).get('lang');
+  return SUPPORTED_LANGS.includes(v) ? v : 'en';
+}
+let currentLang = langFromUrl();
 function setLang(lang) {
+  const prevLang = currentLang;
   currentLang = lang;
   document.documentElement.lang = lang;
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
+  // Swap example sentence if untouched (empty or matches the previous lang's default)
+  const tokInput = document.getElementById('tokInput');
+  if (tokInput.value === '' || tokInput.value === TOK_DEFAULTS[prevLang]) {
+    tokInput.value = TOK_DEFAULTS[lang];
+  }
   // Plain text + HTML swaps
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
@@ -937,12 +954,8 @@ document.querySelectorAll('.lang-toggle button').forEach(b => {
 });
 
 // First paint
-document.getElementById('tokInput').value = 'unbelievable supercomputer';
-renderTokens();
-renderMap();
-renderDims();
-renderEq();
-renderPresetBtns();
+document.getElementById('tokInput').value = TOK_DEFAULTS[currentLang];
+setLang(currentLang);
 renderScale();
 </script>
 </body>
