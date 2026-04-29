@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>How a Computer Reads · Hoe een Computer Leest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f4ecd8;
+  --paper-2: #ede1c4;
+  --paper-deep: #e0d2ad;
+  --ink: #2a2218;
+  --ink-soft: #4a3c28;
+  --ink-mute: #75644a;
+  --sage: #6e8b6a;
+  --sage-deep: #4d6749;
+  --terra: #c47659;
+  --terra-deep: #9a5238;
+  --mustard: #c89c3e;
+  --mustard-deep: #9a7a26;
+  --cream: #faf4e3;
+  --line: #c4b48f;
+  --line-soft: rgba(75,60,40,0.18);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.75;
+  background-image:
+    radial-gradient(ellipse at 10% 5%, rgba(196,118,89,0.06), transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(110,139,106,0.07), transparent 50%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence baseFrequency='0.85' /><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.09  0 0 0 0.07 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+header.top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 0 18px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 32px;
+  flex-wrap: wrap; gap: 14px;
+}
+.brand {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  color: var(--terra-deep);
+  letter-spacing: 0.02em;
+}
+.brand::before { content: "✿ "; color: var(--mustard-deep); }
+.lang-toggle {
+  display: inline-flex;
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: 2px 2px 0 var(--paper-deep);
+}
+.lang-toggle button {
+  background: transparent; border: none;
+  color: var(--ink-soft);
+  padding: 8px 18px; border-radius: 999px; cursor: pointer;
+  font: 600 14px 'Cormorant Garamond', serif;
+  letter-spacing: 0.1em;
+  transition: all 0.25s;
+}
+.lang-toggle button.active {
+  background: var(--sage); color: var(--cream);
+}
+.lang-toggle button:hover:not(.active) { color: var(--terra-deep); }
+
+/* HERO */
+.hero { padding: 24px 0 56px; text-align: center; }
+.hero-orn {
+  font-family: 'Caveat', cursive;
+  color: var(--mustard-deep);
+  font-size: 38px;
+  margin-bottom: 8px;
+  display: block;
+}
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(46px, 9vw, 76px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+h1 small {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-style: normal;
+  font-size: 0.42em;
+  color: var(--terra);
+  font-weight: 600;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+.lede {
+  font-size: clamp(19px, 2.4vw, 23px);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 540px;
+  margin: 0 auto;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+}
+
+/* SECTIONS */
+section { padding: 56px 0; position: relative; }
+section + section { border-top: 1px dashed var(--line); }
+.step-num {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: var(--terra);
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 22px;
+  letter-spacing: -0.005em;
+}
+p.body {
+  margin-bottom: 18px;
+  font-size: 19px;
+  color: var(--ink);
+  max-width: 620px;
+}
+p.body strong { color: var(--terra-deep); font-weight: 600; }
+.note {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--mustard-deep);
+  margin: 16px 0 22px;
+  padding-left: 20px;
+  border-left: 3px solid var(--mustard);
+  font-weight: 600;
+}
+
+/* APPLE DEMO */
+.apple-card {
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 30px 26px;
+  margin: 28px 0;
+  box-shadow: 4px 4px 0 var(--paper-deep);
+}
+.apple-card label {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--sage-deep);
+  margin-bottom: 10px;
+}
+.apple-input {
+  width: 100%;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+  padding: 14px 18px;
+  border-radius: 6px;
+  font: 19px 'Lora', serif;
+  outline: none;
+}
+.apple-input:focus { border-color: var(--terra); }
+.slices {
+  margin-top: 22px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  align-items: center;
+  min-height: 60px;
+}
+.slice {
+  background: var(--paper-2);
+  border: 1.5px solid var(--terra);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font: 600 18px 'Lora', serif;
+  position: relative;
+  animation: drop 0.4s cubic-bezier(.5,1.5,.5,1);
+}
+.slice.s-whole { background: rgba(110,139,106,0.18); border-color: var(--sage); color: var(--sage-deep); }
+.slice.s-piece { background: rgba(200,156,62,0.18); border-color: var(--mustard); color: var(--mustard-deep); }
+.slice.s-end { background: rgba(196,118,89,0.18); border-color: var(--terra); color: var(--terra-deep); }
+.slice.s-other { background: var(--paper-deep); border-color: var(--ink-mute); color: var(--ink-soft); }
+.knife {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  color: var(--terra);
+  user-select: none;
+}
+@keyframes drop {
+  from { transform: translateY(-12px) rotate(-3deg); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.slice-legend {
+  display: flex; flex-wrap: wrap; gap: 12px 18px;
+  margin-top: 16px;
+  font: 16px 'Caveat', cursive;
+  color: var(--ink-soft);
+}
+.slice-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.slice-legend .dot { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid; }
+
+/* HOUSE NUMBER / ID */
+.house-row {
+  display: grid; gap: 12px;
+  margin-top: 18px;
+}
+.house {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--paper-deep);
+}
+.house .word-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+}
+.house .arrow {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  color: var(--terra);
+}
+.house .num-big {
+  font-family: 'Caveat', cursive;
+  font-size: 32px;
+  color: var(--mustard-deep);
+  font-weight: 700;
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+/* GARDEN */
+.garden {
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  margin: 24px 0 16px;
+  box-shadow: 4px 4px 0 var(--paper-deep);
+  overflow: hidden;
+}
+.garden svg { display: block; width: 100%; height: auto; }
+.garden-key {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+.garden-key span { display: inline-flex; align-items: center; gap: 6px; }
+.garden-key .leaf {
+  width: 14px; height: 14px; border-radius: 50% 0 50% 0;
+  display: inline-block;
+  transform: rotate(-12deg);
+}
+
+/* SPICE RACK / DIMENSIONS */
+.spice-card {
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 26px 24px;
+  margin: 24px 0;
+  box-shadow: 4px 4px 0 var(--paper-deep);
+}
+.spice-pick {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 20px;
+}
+.spice-pick button {
+  font: 600 17px 'Cormorant Garamond', serif;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  border: 1.5px solid var(--line);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.spice-pick button.active {
+  background: var(--sage); color: var(--cream);
+  border-color: var(--sage-deep);
+}
+.spice-pick button:hover:not(.active) {
+  background: var(--paper-deep);
+  border-color: var(--terra);
+}
+.spice-row {
+  display: grid;
+  grid-template-columns: minmax(80px, 110px) 1fr minmax(80px, 110px);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+  font-family: 'Caveat', cursive;
+  font-size: 19px;
+  color: var(--ink-soft);
+}
+.spice-row .l-l { text-align: right; }
+.spice-row .l-r { text-align: left; }
+.spice-track {
+  position: relative;
+  height: 36px;
+  background: linear-gradient(90deg, var(--paper-2), var(--paper-deep));
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+}
+.spice-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--terra);
+  color: var(--cream);
+  padding: 5px 14px;
+  border-radius: 16px;
+  font: 600 16px 'Cormorant Garamond', serif;
+  font-style: italic;
+  white-space: nowrap;
+  transition: left 0.7s cubic-bezier(.5,1.4,.4,1), background 0.4s;
+  box-shadow: 2px 2px 0 var(--terra-deep);
+}
+
+/* RECIPE / VECTOR */
+.recipe {
+  background: var(--cream);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 28px 22px;
+  margin: 24px 0;
+  box-shadow: 4px 4px 0 var(--paper-deep);
+  text-align: center;
+}
+.recipe-title {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--terra-deep);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.recipe-eq {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 26px);
+}
+.recipe-eq .ingredient {
+  background: var(--paper-2);
+  border: 1.5px solid var(--mustard);
+  color: var(--ink);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-style: italic;
+  font-weight: 500;
+}
+.recipe-eq .op {
+  color: var(--terra);
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.4em;
+}
+.recipe-eq .answer {
+  background: var(--sage);
+  color: var(--cream);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-style: italic;
+  animation: bloom 0.7s ease;
+}
+@keyframes bloom {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.recipe-pick {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-top: 22px;
+}
+.recipe-pick button {
+  font: 500 16px 'Cormorant Garamond', serif;
+  font-style: italic;
+  background: var(--paper);
+  color: var(--ink-soft);
+  border: 1.5px solid var(--line);
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.recipe-pick button:hover {
+  background: var(--paper-deep);
+  border-color: var(--terra);
+  color: var(--terra-deep);
+}
+
+/* CLOSING */
+.closing {
+  text-align: center;
+  padding: 56px 0 24px;
+}
+.closing-orn {
+  font-family: 'Caveat', cursive;
+  color: var(--mustard-deep);
+  font-size: 38px;
+  margin-bottom: 18px;
+}
+.closing p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 26px);
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 540px;
+  margin: 0 auto 18px;
+}
+.signature {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  color: var(--terra-deep);
+  margin-top: 28px;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 26px 0;
+  border-top: 1px dashed var(--line);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+@media (max-width: 580px) {
+  body { font-size: 18px; }
+  .wrap { padding: 0 18px 60px; }
+  section { padding: 44px 0; }
+  .apple-card, .spice-card, .recipe { padding: 22px 18px; }
+  .house { padding: 14px 16px; gap: 10px; }
+  .house .word-big { font-size: 19px; }
+  .house .num-big { font-size: 26px; }
+  .spice-row { grid-template-columns: 70px 1fr 70px; gap: 8px; font-size: 16px; }
+  .spice-marker { padding: 4px 10px; font-size: 14px; }
+  .recipe-eq { gap: 6px; }
+  .recipe-eq .ingredient, .recipe-eq .answer { padding: 7px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="brand" data-i18n="brand">A little kitchen-table lesson</div>
+  <div class="lang-toggle">
+    <button data-lang="en" class="active">EN</button>
+    <button data-lang="nl">NL</button>
+    <button data-lang="es">ES</button>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="hero-orn" data-i18n="heroOrn">~ a story for the curious ~</span>
+  <h1 data-i18n-html="heroTitle">How a Computer Reads<small>(told the simple way)</small></h1>
+  <p class="lede" data-i18n="heroLede">You know those clever talking computers — the ones that write letters and answer questions? Here is what they really do, in five small steps. No big words. Just kitchen things.</p>
+</div>
+
+<section>
+  <span class="step-num" data-i18n="step1">~ Step 1 ~</span>
+  <h2 data-i18n="s1Title">First, the computer slices the words.</h2>
+  <p class="body" data-i18n="s1p1">Think of an apple. If it's small, you can eat it whole. If it's big, you cut it into pieces.</p>
+  <p class="body" data-i18n="s1p2">A computer does the same with words. Short, common words it keeps whole — like <em>cat</em>, or <em>dog</em>. Long or unusual words get sliced into smaller bites.</p>
+  <p class="note" data-i18n="s1note">"Try it yourself, dear — type a long word and watch."</p>
+  <div class="apple-card">
+    <label data-i18n="s1label">Type a sentence here:</label>
+    <input id="appleInput" class="apple-input" type="text" data-i18n-attr="placeholder" data-i18n-placeholder="s1ph" placeholder="like: unbelievable strawberries">
+    <div class="slices" id="slicesOut"></div>
+    <div class="slice-legend">
+      <span><span class="dot" style="background:rgba(110,139,106,0.3); border-color:var(--sage)"></span><span data-i18n="legWhole">whole little word</span></span>
+      <span><span class="dot" style="background:rgba(200,156,62,0.3); border-color:var(--mustard)"></span><span data-i18n="legPiece">word piece</span></span>
+      <span><span class="dot" style="background:rgba(196,118,89,0.3); border-color:var(--terra)"></span><span data-i18n="legEnd">ending</span></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="step-num" data-i18n="step2">~ Step 2 ~</span>
+  <h2 data-i18n="s2Title">Every slice gets a number.</h2>
+  <p class="body" data-i18n="s2p1">Imagine a very long street. Every house has a number — number 7, number 12, number 144 — so the postman knows where to go.</p>
+  <p class="body" data-i18n="s2p2">The computer does the same. Every word-slice gets its own number. After this, the computer doesn't think about <em>letters</em> anymore. Only numbers. That's how it likes to think.</p>
+  <div class="house-row" id="houseRow"></div>
+</section>
+
+<section>
+  <span class="step-num" data-i18n="step3">~ Step 3 ~</span>
+  <h2 data-i18n="s3Title">Then it plants a garden of meaning.</h2>
+  <p class="body" data-i18n="s3p1">Now here's the lovely part. Imagine a big garden. The computer plants every word in this garden — and words that <strong>belong together</strong> are planted side by side.</p>
+  <p class="body" data-i18n="s3p2">The cats grow next to the dogs. The bread grows next to the cheese. The bicycles grow far away from the strawberries. Have a look:</p>
+  <div class="garden">
+    <svg viewBox="0 0 700 460" id="gardenSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+  <div class="garden-key" id="gardenKey"></div>
+  <p class="body" data-i18n="s3p3">It learned this all by itself, just by reading and reading and reading. Words that often appear together end up close together. Like little plants that like the same soil.</p>
+</section>
+
+<section>
+  <span class="step-num" data-i18n="step4">~ Step 4 ~</span>
+  <h2 data-i18n="s4Title">It sorts everything by qualities.</h2>
+  <p class="body" data-i18n="s4p1">You know how you might sort the spice rack? By color. Or by which is sweetest. Or by which is the spiciest.</p>
+  <p class="body" data-i18n="s4p2">The computer does the same — but with hundreds of qualities at once. Pick something below, and see where it lands on a few:</p>
+  <div class="spice-card">
+    <div class="spice-pick" id="spicePick"></div>
+    <div class="spice-row">
+      <span class="l-l" data-i18n="qSmall">small</span>
+      <div class="spice-track"><div class="spice-marker" id="q1">·</div></div>
+      <span class="l-r" data-i18n="qBig">big</span>
+    </div>
+    <div class="spice-row">
+      <span class="l-l" data-i18n="qThing">a thing</span>
+      <div class="spice-track"><div class="spice-marker" id="q2">·</div></div>
+      <span class="l-r" data-i18n="qLiving">a living being</span>
+    </div>
+    <div class="spice-row">
+      <span class="l-l" data-i18n="qCold">cold</span>
+      <div class="spice-track"><div class="spice-marker" id="q3">·</div></div>
+      <span class="l-r" data-i18n="qWarm">warm</span>
+    </div>
+    <div class="spice-row">
+      <span class="l-l" data-i18n="qSoft">soft</span>
+      <div class="spice-track"><div class="spice-marker" id="q4">·</div></div>
+      <span class="l-r" data-i18n="qHard">hard</span>
+    </div>
+  </div>
+  <p class="note" data-i18n="s4note">"And the real computer uses thousands of these — not just four."</p>
+</section>
+
+<section>
+  <span class="step-num" data-i18n="step5">~ Step 5 ~</span>
+  <h2 data-i18n="s5Title">And then — the recipe trick.</h2>
+  <p class="body" data-i18n="s5p1">When you cook, you sometimes swap an ingredient. You take a recipe for milk coffee, take out the milk, add soy milk — and you have soy coffee. Same drink, just with a swap.</p>
+  <p class="body" data-i18n="s5p2">The computer can do this with words. <strong>It actually swaps meanings the way you swap ingredients.</strong> Watch:</p>
+  <div class="recipe">
+    <div class="recipe-title" id="rTitle">a queen is just a king, but a woman</div>
+    <div class="recipe-eq" id="recipeEq"></div>
+    <div class="recipe-pick" id="recipePick"></div>
+  </div>
+  <p class="body" data-i18n="s5p3">Take "king." Remove the "man" part. Put in the "woman" part. The answer is "queen." Nobody told the computer this — it figured it out, all on its own, just by reading.</p>
+  <p class="note" data-i18n="s5note">"Like swapping butter for olive oil. The shape of the recipe stays the same."</p>
+</section>
+
+<div class="closing">
+  <div class="closing-orn">~ ✿ ~</div>
+  <p data-i18n="closeP1">So that's the whole secret. Slice the words. Number the slices. Plant a garden of meanings. Sort by quality. Swap ingredients.</p>
+  <p data-i18n="closeP2">Five little steps. Done a few thousand times. Across a few billion sentences.</p>
+  <p data-i18n="closeP3">And out comes a computer that seems to understand you.</p>
+  <div class="signature" data-i18n="signature">— with love, from the kitchen table</div>
+</div>
+
+<footer>
+  <span data-i18n="footer">a small lesson · made with care</span>
+</footer>
+
+</div>
+
+<script>
+const I18N = {
+  en: {
+    brand: "A little kitchen-table lesson",
+    heroOrn: "~ a story for the curious ~",
+    heroTitle: 'How a Computer Reads<small>(told the simple way)</small>',
+    heroLede: "You know those clever talking computers — the ones that write letters and answer questions? Here is what they really do, in five small steps. No big words. Just kitchen things.",
+    step1: "~ Step 1 ~",
+    s1Title: "First, the computer slices the words.",
+    s1p1: "Think of an apple. If it's small, you can eat it whole. If it's big, you cut it into pieces.",
+    s1p2: "A computer does the same with words. Short, common words it keeps whole — like <i>cat</i>, or <i>dog</i>. Long or unusual words get sliced into smaller bites.",
+    s1note: '"Try it yourself, dear — type a long word and watch."',
+    s1label: "Type a sentence here:",
+    s1ph: "like: unbelievable strawberries",
+    legWhole: "whole little word",
+    legPiece: "word piece",
+    legEnd: "ending",
+    step2: "~ Step 2 ~",
+    s2Title: "Every slice gets a number.",
+    s2p1: "Imagine a very long street. Every house has a number — number 7, number 12, number 144 — so the postman knows where to go.",
+    s2p2: "The computer does the same. Every word-slice gets its own number. After this, the computer doesn't think about <i>letters</i> anymore. Only numbers. That's how it likes to think.",
+    step3: "~ Step 3 ~",
+    s3Title: "Then it plants a garden of meaning.",
+    s3p1: "Now here's the lovely part. Imagine a big garden. The computer plants every word in this garden — and words that <b>belong together</b> are planted side by side.",
+    s3p2: "The cats grow next to the dogs. The bread grows next to the cheese. The bicycles grow far away from the strawberries. Have a look:",
+    s3p3: "It learned this all by itself, just by reading and reading and reading. Words that often appear together end up close together. Like little plants that like the same soil.",
+    step4: "~ Step 4 ~",
+    s4Title: "It sorts everything by qualities.",
+    s4p1: "You know how you might sort the spice rack? By color. Or by which is sweetest. Or by which is the spiciest.",
+    s4p2: "The computer does the same — but with hundreds of qualities at once. Pick something below, and see where it lands on a few:",
+    s4note: '"And the real computer uses thousands of these — not just four."',
+    qSmall: "small", qBig: "big",
+    qThing: "a thing", qLiving: "a living being",
+    qCold: "cold", qWarm: "warm",
+    qSoft: "soft", qHard: "hard",
+    step5: "~ Step 5 ~",
+    s5Title: "And then — the recipe trick.",
+    s5p1: "When you cook, you sometimes swap an ingredient. You take a recipe for milk coffee, take out the milk, add soy milk — and you have soy coffee. Same drink, just with a swap.",
+    s5p2: "The computer can do this with words. <b>It actually swaps meanings the way you swap ingredients.</b> Watch:",
+    s5p3: 'Take "king." Remove the "man" part. Put in the "woman" part. The answer is "queen." Nobody told the computer this — it figured it out, all on its own, just by reading.',
+    s5note: '"Like swapping butter for olive oil. The shape of the recipe stays the same."',
+    closeP1: "So that's the whole secret. Slice the words. Number the slices. Plant a garden of meanings. Sort by quality. Swap ingredients.",
+    closeP2: "Five little steps. Done a few thousand times. Across a few billion sentences.",
+    closeP3: "And out comes a computer that seems to understand you.",
+    signature: "— with love, from the kitchen table",
+    footer: "a small lesson · made with care",
+    keys: { animals: "animals", food: "kitchen things", tech: "machines", flowers: "feelings", vehicles: "things that go" },
+    rTitles: [
+      "a queen is just a king, but a woman",
+      "Rome is just Paris, but in Italy",
+      "swimming is just walking, but in water",
+      "smaller is just bigger, but the small kind"
+    ]
+  },
+  nl: {
+    brand: "Een lesje aan de keukentafel",
+    heroOrn: "~ een verhaal voor de nieuwsgierigen ~",
+    heroTitle: 'Hoe een Computer Leest<small>(simpel uitgelegd)</small>',
+    heroLede: "Je kent ze wel, die slimme pratende computers — die brieven schrijven en vragen beantwoorden? Hier is wat ze écht doen, in vijf kleine stapjes. Geen moeilijke woorden. Gewoon dingen uit de keuken.",
+    step1: "~ Stap 1 ~",
+    s1Title: "Eerst snijdt de computer de woorden in stukjes.",
+    s1p1: "Denk aan een appel. Als hij klein is, kun je hem in één hap eten. Is hij groot, dan snij je hem in stukjes.",
+    s1p2: "De computer doet hetzelfde met woorden. Korte, gewone woorden laat hij heel — zoals <i>kat</i>, of <i>hond</i>. Lange of ongewone woorden worden in stukjes gesneden.",
+    s1note: '"Probeer het zelf maar, lieve — tik een lang woord in en kijk."',
+    s1label: "Tik hier een zin:",
+    s1ph: "bijvoorbeeld: ongelofelijke aardbeien",
+    legWhole: "heel woordje",
+    legPiece: "woordstukje",
+    legEnd: "uitgang",
+    step2: "~ Stap 2 ~",
+    s2Title: "Elk stukje krijgt een nummer.",
+    s2p1: "Stel je een hele lange straat voor. Elk huis heeft een nummer — nummer 7, nummer 12, nummer 144 — zodat de postbode weet waar hij moet zijn.",
+    s2p2: "De computer doet precies hetzelfde. Elk woordstukje krijgt zijn eigen nummer. Daarna denkt de computer niet meer in <i>letters</i>. Alleen nog in nummers. Zo denkt hij het liefst.",
+    step3: "~ Stap 3 ~",
+    s3Title: "Dan plant hij een tuin vol betekenis.",
+    s3p1: "En nu komt het mooie. Stel je een grote tuin voor. De computer plant elk woord in deze tuin — en woorden die <b>bij elkaar horen</b> staan naast elkaar geplant.",
+    s3p2: "De katten staan naast de honden. Het brood staat naast de kaas. De fietsen staan ver weg van de aardbeien. Kijk maar:",
+    s3p3: "Hij heeft dit allemaal zelf geleerd, alleen door te lezen en te lezen en te lezen. Woorden die vaak samen voorkomen, eindigen dicht bij elkaar. Net als kleine plantjes die dezelfde grond lekker vinden.",
+    step4: "~ Stap 4 ~",
+    s4Title: "Hij sorteert alles op eigenschappen.",
+    s4p1: "Je weet wel hoe je het kruidenrek zou kunnen sorteren? Op kleur. Of op wat het zoetst is. Of op wat het pittigst is.",
+    s4p2: "De computer doet hetzelfde — maar met honderden eigenschappen tegelijk. Kies hieronder iets, en zie waar het belandt op een paar:",
+    s4note: '"En de echte computer gebruikt er duizenden — niet vier."',
+    qSmall: "klein", qBig: "groot",
+    qThing: "een ding", qLiving: "een levend wezen",
+    qCold: "koud", qWarm: "warm",
+    qSoft: "zacht", qHard: "hard",
+    step5: "~ Stap 5 ~",
+    s5Title: "En toen — het recepttrucje.",
+    s5p1: "Als je kookt, vervang je soms een ingrediënt. Je neemt het recept voor melkkoffie, haalt de melk eruit, doet er sojamelk in — en je hebt sojakoffie. Hetzelfde drankje, met één wisseling.",
+    s5p2: "De computer kan dit met woorden. <b>Hij wisselt betekenissen om net zoals jij ingrediënten omwisselt.</b> Kijk:",
+    s5p3: 'Neem "koning." Haal het "man"-deel eruit. Doe er het "vrouw"-deel in. Het antwoord is "koningin." Niemand heeft de computer dit verteld — hij heeft het helemaal zelf bedacht, gewoon door te lezen.',
+    s5note: '"Net als boter vervangen door olijfolie. De vorm van het recept blijft hetzelfde."',
+    closeP1: "En dat is het hele geheim. Snij de woorden. Nummer de stukjes. Plant een tuin vol betekenissen. Sorteer op eigenschap. Wissel ingrediënten om.",
+    closeP2: "Vijf kleine stapjes. Een paar duizend keer gedaan. Over een paar miljard zinnen.",
+    closeP3: "En eruit komt een computer die je lijkt te begrijpen.",
+    signature: "— met liefs, van de keukentafel",
+    footer: "een klein lesje · met zorg gemaakt",
+    keys: { animals: "dieren", food: "uit de keuken", tech: "apparaten", flowers: "gevoelens", vehicles: "voertuigen" },
+    rTitles: [
+      "een koningin is gewoon een koning, maar een vrouw",
+      "Rome is gewoon Parijs, maar in Italië",
+      "zwemmen is gewoon lopen, maar in het water",
+      "kleiner is gewoon groter, maar de kleine soort"
+    ]
+  },
+  es: {
+    brand: "Una pequeña lección en la mesa de la cocina",
+    heroOrn: "~ una historia para los curiosos ~",
+    heroTitle: 'Cómo Lee una Computadora<small>(contado de manera sencilla)</small>',
+    heroLede: "¿Conoces esas computadoras inteligentes que hablan — las que escriben cartas y responden preguntas? Esto es lo que de verdad hacen, en cinco pequeños pasos. Sin palabras complicadas. Solo cosas de la cocina.",
+    step1: "~ Paso 1 ~",
+    s1Title: "Primero, la computadora corta las palabras en pedacitos.",
+    s1p1: "Piensa en una manzana. Si es pequeña, te la puedes comer entera. Si es grande, la cortas en pedazos.",
+    s1p2: "La computadora hace lo mismo con las palabras. Las palabras cortas y comunes las deja enteras — como <i>gato</i>, o <i>perro</i>. Las palabras largas o poco comunes las corta en bocaditos más pequeños.",
+    s1note: '"Pruébalo tú mismo, querido — escribe una palabra larga y mira."',
+    s1label: "Escribe una frase aquí:",
+    s1ph: "como: fresas increíblemente sabrosas",
+    legWhole: "palabra entera",
+    legPiece: "pedacito",
+    legEnd: "terminación",
+    step2: "~ Paso 2 ~",
+    s2Title: "Cada pedacito recibe un número.",
+    s2p1: "Imagina una calle muy larga. Cada casa tiene un número — número 7, número 12, número 144 — para que el cartero sepa adónde ir.",
+    s2p2: "La computadora hace lo mismo. Cada pedacito de palabra recibe su propio número. Después de esto, la computadora ya no piensa en <i>letras</i>. Solo en números. Así es como le gusta pensar.",
+    step3: "~ Paso 3 ~",
+    s3Title: "Luego planta un jardín de significados.",
+    s3p1: "Y ahora viene la parte hermosa. Imagina un gran jardín. La computadora planta cada palabra en este jardín — y las palabras que <b>van juntas</b> se plantan una al lado de la otra.",
+    s3p2: "Los gatos crecen junto a los perros. El pan crece junto al queso. Las bicicletas crecen lejos de las fresas. Mira:",
+    s3p3: "Aprendió todo esto sola, simplemente leyendo y leyendo y leyendo. Las palabras que aparecen juntas a menudo terminan cerca unas de otras. Como pequeñas plantas a las que les gusta la misma tierra.",
+    step4: "~ Paso 4 ~",
+    s4Title: "Lo ordena todo por cualidades.",
+    s4p1: "¿Sabes cómo podrías ordenar el especiero? Por color. O por cuál es la más dulce. O por cuál es la más picante.",
+    s4p2: "La computadora hace lo mismo — pero con cientos de cualidades a la vez. Elige algo abajo y mira dónde queda según unas cuantas:",
+    s4note: '"Y la computadora de verdad usa miles de estas — no solo cuatro."',
+    qSmall: "pequeño", qBig: "grande",
+    qThing: "una cosa", qLiving: "un ser vivo",
+    qCold: "frío", qWarm: "cálido",
+    qSoft: "blando", qHard: "duro",
+    step5: "~ Paso 5 ~",
+    s5Title: "Y entonces — el truco de la receta.",
+    s5p1: "Cuando cocinas, a veces cambias un ingrediente. Tomas la receta del café con leche, le quitas la leche, le agregas leche de soya — y tienes café con leche de soya. La misma bebida, solo con un cambio.",
+    s5p2: "La computadora puede hacer esto con palabras. <b>De verdad cambia significados igual que tú cambias ingredientes.</b> Mira:",
+    s5p3: 'Toma "rey." Quítale la parte de "hombre." Pon la parte de "mujer." La respuesta es "reina." Nadie le dijo esto a la computadora — lo descubrió todo ella sola, simplemente leyendo.',
+    s5note: '"Como cambiar la mantequilla por aceite de oliva. La forma de la receta queda igual."',
+    closeP1: "Así que ese es todo el secreto. Cortar las palabras. Numerar los pedacitos. Plantar un jardín de significados. Ordenar por cualidad. Cambiar ingredientes.",
+    closeP2: "Cinco pequeños pasos. Hechos unos cuantos miles de veces. A lo largo de unos cuantos miles de millones de frases.",
+    closeP3: "Y sale una computadora que parece entenderte.",
+    signature: "— con cariño, desde la mesa de la cocina",
+    footer: "una pequeña lección · hecha con cariño",
+    keys: { animals: "animales", food: "cosas de la cocina", tech: "máquinas", flowers: "sentimientos", vehicles: "cosas que se mueven" },
+    rTitles: [
+      "una reina es solo un rey, pero mujer",
+      "Roma es solo París, pero en Italia",
+      "nadar es solo caminar, pero en el agua",
+      "más pequeño es solo más grande, pero al revés"
+    ]
+  }
+};
+
+// ─── Garden words (positions tuned for clusters) ─────────
+// [en, nl, es, x, y, cluster]
+const GARDEN = [
+  // animals — top-left
+  ["cat","kat","gato",110,90,"animals"],
+  ["dog","hond","perro",170,80,"animals"],
+  ["mouse","muis","ratón",90,140,"animals"],
+  ["rabbit","konijn","conejo",155,140,"animals"],
+  ["bird","vogel","pájaro",215,110,"animals"],
+  // food / kitchen — left-mid
+  ["bread","brood","pan",95,235,"food"],
+  ["cheese","kaas","queso",165,230,"food"],
+  ["apple","appel","manzana",110,290,"food"],
+  ["soup","soep","sopa",195,280,"food"],
+  ["strawberry","aardbei","fresa",55,260,"food"],
+  // tech / machines — top-right
+  ["radio","radio","radio",530,95,"tech"],
+  ["phone","telefoon","teléfono",600,80,"tech"],
+  ["computer","computer","computadora",555,150,"tech"],
+  ["clock","klok","reloj",625,135,"tech"],
+  ["lamp","lamp","lámpara",495,130,"tech"],
+  // emotions / flowers — center
+  ["happy","blij","feliz",335,195,"flowers"],
+  ["sad","verdrietig","triste",375,225,"flowers"],
+  ["calm","rustig","tranquilo",315,245,"flowers"],
+  ["love","liefde","amor",400,180,"flowers"],
+  ["scared","bang","asustado",290,210,"flowers"],
+  // vehicles — bottom
+  ["car","auto","carro",250,395,"vehicles"],
+  ["bicycle","fiets","bicicleta",315,410,"vehicles"],
+  ["bus","bus","autobús",195,405,"vehicles"],
+  ["train","trein","tren",380,395,"vehicles"],
+  ["boat","boot","barco",450,410,"vehicles"]
+];
+
+const KEY_COLORS = {
+  animals:  "#6e8b6a",
+  food:     "#c47659",
+  tech:     "#75644a",
+  flowers:  "#c89c3e",
+  vehicles: "#8a7ca3"
+};
+
+// Quality data: word → [size, alive, warm, hard] each 0-100
+const Q_DATA = {
+  cat:        [22, 92,  62, 28],
+  bread:      [30, 8,   42, 32],
+  ice:        [40, 4,   8,  74],
+  fire:       [40, 6,   97, 18],
+  bicycle:    [55, 3,   40, 76],
+  elephant:   [95, 88,  62, 50],
+  flower:     [18, 76,  55, 18]
+};
+const Q_NAMES = {
+  en: { cat: "cat", bread: "bread", ice: "ice", fire: "fire", bicycle: "bicycle", elephant: "elephant", flower: "flower" },
+  nl: { cat: "kat", bread: "brood", ice: "ijs", fire: "vuur", bicycle: "fiets", elephant: "olifant", flower: "bloem" },
+  es: { cat: "gato", bread: "pan", ice: "hielo", fire: "fuego", bicycle: "bicicleta", elephant: "elefante", flower: "flor" }
+};
+
+// Recipe presets (vector arithmetic, but framed as recipes)
+const RECIPES = {
+  en: [
+    { a:"king",     b:"man",     c:"woman",   r:"queen" },
+    { a:"Paris",    b:"France",  c:"Italy",   r:"Rome" },
+    { a:"walking",  b:"walk",    c:"swim",    r:"swimming" },
+    { a:"bigger",   b:"big",     c:"small",   r:"smaller" }
+  ],
+  nl: [
+    { a:"koning",   b:"man",     c:"vrouw",   r:"koningin" },
+    { a:"Parijs",   b:"Frankrijk", c:"Italië", r:"Rome" },
+    { a:"lopend",   b:"lopen",   c:"zwemmen", r:"zwemmend" },
+    { a:"groter",   b:"groot",   c:"klein",   r:"kleiner" }
+  ],
+  es: [
+    { a:"rey",      b:"hombre",  c:"mujer",   r:"reina" },
+    { a:"París",    b:"Francia", c:"Italia",  r:"Roma" },
+    { a:"caminando",b:"caminar", c:"nadar",   r:"nadando" },
+    { a:"más grande", b:"grande", c:"pequeño", r:"más pequeño" }
+  ]
+};
+
+// ─── Apple slicing tokenizer ─────────────────────────────
+const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","cat","dog","big","small","good","bad","yes","no","de","het","een","en","of","maar","ik","jij","is","met","op","in","kat","hond","goed","slecht","el","la","los","las","del","que","y","un","una","es","son","soy","eres","somos","con","por","para","como","este","esta","esto","mi","tu","su","yo","tú","él","sí","no","gato","perro","grande","pequeño"]);
+const SUFFIXES = ["iendo","ables","ibles","íbles","mente","ción","sión","ando","idad","tion","heid","lijk","baar","able","ness","ies","ado","ido","ing","ly","ed","est","er","jes","en"];
+const PREFIXES = ["sobre","super","under","anti","over","pre","des","mis","un","re","ge","ver","be","im","in","on"];
+
+function slice(text) {
+  const tokens = [];
+  text.split(/(\s+)/).forEach(part => {
+    if (!part) return;
+    if (/^\s+$/.test(part)) { tokens.push({text:"·", cls:"s-other", isSpace:true}); return; }
+    const m = part.match(/^([\w']+)(.*)$/);
+    let word = m ? m[1] : part;
+    let rest = m ? m[2] : "";
+    sliceWord(word).forEach(t => tokens.push(t));
+    if (rest) tokens.push({text: rest, cls: "s-other"});
+  });
+  return tokens;
+}
+function sliceWord(w) {
+  const lower = w.toLowerCase();
+  if (lower.length <= 4 || COMMON.has(lower)) return [{text: w, cls: "s-whole"}];
+  for (const s of SUFFIXES) {
+    if (lower.endsWith(s) && lower.length - s.length >= 3) {
+      return [
+        { text: w.slice(0, -s.length), cls: "s-piece" },
+        { text: w.slice(-s.length), cls: "s-end" }
+      ];
+    }
+  }
+  for (const p of PREFIXES) {
+    if (lower.startsWith(p) && lower.length - p.length >= 4) {
+      return [
+        { text: w.slice(0, p.length), cls: "s-piece" },
+        { text: w.slice(p.length), cls: "s-whole" }
+      ];
+    }
+  }
+  const mid = Math.ceil(w.length / 2);
+  return [
+    { text: w.slice(0, mid), cls: "s-piece" },
+    { text: w.slice(mid), cls: "s-end" }
+  ];
+}
+function fakeId(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h) % 49999 + 100;
+}
+
+const APPLE_DEFAULTS = { en: "unbelievable strawberries", nl: "ongelofelijke aardbeien", es: "fresas increíblemente sabrosas" };
+
+function renderApple() {
+  const text = document.getElementById('appleInput').value || APPLE_DEFAULTS[currentLang];
+  const out = document.getElementById('slicesOut');
+  const houseRow = document.getElementById('houseRow');
+  out.innerHTML = '';
+  houseRow.innerHTML = '';
+  const tokens = slice(text);
+  tokens.forEach((t, i) => {
+    if (t.isSpace) {
+      const k = document.createElement('span');
+      k.className = 'knife'; k.textContent = '·';
+      out.appendChild(k);
+      return;
+    }
+    const sl = document.createElement('span');
+    sl.className = `slice ${t.cls}`;
+    sl.textContent = t.text;
+    sl.style.animationDelay = (i * 50) + 'ms';
+    out.appendChild(sl);
+    if (t.cls !== "s-other") {
+      const h = document.createElement('div');
+      h.className = 'house';
+      h.innerHTML = `<span class="word-big">"${t.text}"</span><span class="arrow">~ house no. ~</span><span class="num-big">${fakeId(t.text)}</span>`;
+      houseRow.appendChild(h);
+    }
+  });
+}
+
+// ─── Garden rendering ─────────────────────────────────────
+function renderGarden() {
+  const svg = document.getElementById('gardenSvg');
+  const t = I18N[currentLang];
+  let html = '';
+  // Soil texture — gentle stippling
+  html += '<defs><filter id="paper"><feTurbulence baseFrequency="0.85" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.8  0 0 0 0 0.74  0 0 0 0 0.6  0 0 0 0.05 0"/></filter></defs>';
+  html += '<rect width="700" height="460" fill="#faf4e3"/>';
+  html += '<rect width="700" height="460" filter="url(#paper)" opacity="0.6"/>';
+  // Cluster halos as soft garden plots
+  const clusters = {};
+  GARDEN.forEach(w => { (clusters[w[5]] ||= []).push([w[3], w[4]]); });
+  Object.entries(clusters).forEach(([cname, pts]) => {
+    const cx = pts.reduce((a,p)=>a+p[0],0)/pts.length;
+    const cy = pts.reduce((a,p)=>a+p[1],0)/pts.length;
+    const r = Math.max(...pts.map(p=>Math.hypot(p[0]-cx,p[1]-cy))) + 36;
+    html += `<ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${r*0.78}" fill="${KEY_COLORS[cname]}" opacity="0.13"/>`;
+    html += `<ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${r*0.78}" fill="none" stroke="${KEY_COLORS[cname]}" stroke-width="1.2" stroke-dasharray="3 4" opacity="0.45"/>`;
+  });
+  // Plants — little leaf icons + word labels
+  GARDEN.forEach(w => {
+    const [en, nl, es, x, y, c] = w;
+    const label = { en, nl, es }[currentLang];
+    const color = KEY_COLORS[c];
+    // simple leaf as a rotated shape
+    html += `<g>`;
+    html += `<path d="M ${x} ${y} q -7 -10 0 -18 q 7 8 0 18 z" fill="${color}" opacity="0.9"/>`;
+    html += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y+8}" stroke="${color}" stroke-width="1.4" opacity="0.85"/>`;
+    html += `<text x="${x}" y="${y+24}" text-anchor="middle" font-family="Cormorant Garamond, serif" font-style="italic" font-size="15" fill="#2a2218">${label}</text>`;
+    html += `</g>`;
+  });
+  svg.innerHTML = html;
+  // Key
+  const key = document.getElementById('gardenKey');
+  key.innerHTML = '';
+  Object.entries(KEY_COLORS).forEach(([k, color]) => {
+    const span = document.createElement('span');
+    span.innerHTML = `<span class="leaf" style="background:${color}"></span>${t.keys[k]}`;
+    key.appendChild(span);
+  });
+}
+
+// ─── Spice / quality renderer ─────────────────────────────
+let currentSpice = "cat";
+function renderSpicePicks() {
+  const wrap = document.getElementById('spicePick');
+  wrap.innerHTML = '';
+  Object.keys(Q_DATA).forEach(k => {
+    const b = document.createElement('button');
+    b.textContent = Q_NAMES[currentLang][k];
+    if (k === currentSpice) b.classList.add('active');
+    b.onclick = () => { currentSpice = k; renderSpicePicks(); renderSpice(); };
+    wrap.appendChild(b);
+  });
+}
+function renderSpice() {
+  const data = Q_DATA[currentSpice];
+  const ids = ['q1','q2','q3','q4'];
+  data.forEach((v, i) => {
+    const m = document.getElementById(ids[i]);
+    m.style.left = v + '%';
+    m.textContent = Q_NAMES[currentLang][currentSpice];
+  });
+}
+
+// ─── Recipe / vector ──────────────────────────────────────
+let recipeIdx = 0;
+function renderRecipe(forceIdx = null) {
+  const list = RECIPES[currentLang];
+  if (forceIdx !== null) recipeIdx = forceIdx;
+  const p = list[recipeIdx];
+  const eq = document.getElementById('recipeEq');
+  eq.innerHTML = `
+    <span class="ingredient">${p.a}</span>
+    <span class="op">−</span>
+    <span class="ingredient">${p.b}</span>
+    <span class="op">+</span>
+    <span class="ingredient">${p.c}</span>
+    <span class="op">=</span>
+    <span class="answer">${p.r}</span>
+  `;
+  const a = eq.querySelector('.answer');
+  a.style.animation = 'none';
+  void a.offsetWidth;
+  a.style.animation = '';
+  // title
+  document.getElementById('rTitle').textContent = I18N[currentLang].rTitles[recipeIdx];
+}
+function renderRecipePicks() {
+  const wrap = document.getElementById('recipePick');
+  const list = RECIPES[currentLang];
+  wrap.innerHTML = '';
+  list.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.textContent = `${p.a} − ${p.b} + ${p.c}`;
+    b.onclick = () => renderRecipe(i);
+    wrap.appendChild(b);
+  });
+}
+
+// ─── Language switching ───────────────────────────────────
+const SUPPORTED_LANGS = ['en', 'nl', 'es'];
+function langFromUrl() {
+  const v = new URLSearchParams(location.search).get('lang');
+  return SUPPORTED_LANGS.includes(v) ? v : 'en';
+}
+let currentLang = langFromUrl();
+function setLang(lang) {
+  const prevLang = currentLang;
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
+  document.querySelectorAll('.lang-toggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  // Swap example sentence if untouched (empty or matches the previous lang's default)
+  const appleInput = document.getElementById('appleInput');
+  if (appleInput.value === '' || appleInput.value === APPLE_DEFAULTS[prevLang]) {
+    appleInput.value = APPLE_DEFAULTS[lang];
+  }
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[lang][k] !== undefined) el.textContent = I18N[lang][k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+  });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    const attr = el.getAttribute('data-i18n-attr');
+    const k = el.getAttribute('data-i18n-' + attr);
+    if (I18N[lang][k] !== undefined) el.setAttribute(attr, I18N[lang][k]);
+  });
+  renderApple();
+  renderGarden();
+  renderSpicePicks();
+  renderSpice();
+  renderRecipe();
+  renderRecipePicks();
+}
+
+// init
+document.getElementById('appleInput').addEventListener('input', renderApple);
+document.querySelectorAll('.lang-toggle button').forEach(b => {
+  b.addEventListener('click', () => setLang(b.dataset.lang));
+});
+document.getElementById('appleInput').value = APPLE_DEFAULTS[currentLang];
+setLang(currentLang);
+</script>
+</body>
+</html>
