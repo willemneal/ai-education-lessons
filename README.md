@@ -3,8 +3,8 @@
 Three interactive HTML lessons on how language models work.
 
 - **shape-of-meaning.html** — A 7-chapter Three.js walkthrough of word embeddings, vector arithmetic, and how meaning becomes geometry.
-- **shape-of-meaning-bilingual.html** — English/Dutch adaptation with a language toggle.
-- **oma-explainer.html** — A kitchen-table version for non-technical readers, in five gentle steps. EN/NL bilingual.
+- **shape-of-meaning-bilingual.html** — English, Dutch, and Spanish adaptation with a language toggle.
+- **oma-explainer.html** — A kitchen-table version for non-technical readers, in five gentle steps. EN, NL, and ES — three languages.
 
 ## Live site
 
@@ -18,7 +18,7 @@ Direct lesson URLs:
 - `https://willemneal.github.io/ai-education-lessons/shape-of-meaning-bilingual.html`
 - `https://willemneal.github.io/ai-education-lessons/oma-explainer.html`
 
-Append `?lang=nl` to either bilingual page to open it in Dutch.
+Append `?lang=nl` (Dutch) or `?lang=es` (Spanish) to either page to open it in that language.
 
 ## Deploy
 

@@ -493,6 +493,7 @@ footer {
   <div class="lang-toggle">
     <button data-lang="en" class="active">EN</button>
     <button data-lang="nl">NL</button>
+    <button data-lang="es">ES</button>
   </div>
 </header>
 
@@ -704,42 +705,94 @@ const I18N = {
       "zwemmen is gewoon lopen, maar in het water",
       "kleiner is gewoon groter, maar de kleine soort"
     ]
+  },
+  es: {
+    brand: "Una pequeña lección en la mesa de la cocina",
+    heroOrn: "~ una historia para los curiosos ~",
+    heroTitle: 'Cómo Lee una Computadora<small>(contado de manera sencilla)</small>',
+    heroLede: "¿Conoces esas computadoras inteligentes que hablan — las que escriben cartas y responden preguntas? Esto es lo que de verdad hacen, en cinco pequeños pasos. Sin palabras complicadas. Solo cosas de la cocina.",
+    step1: "~ Paso 1 ~",
+    s1Title: "Primero, la computadora corta las palabras en pedacitos.",
+    s1p1: "Piensa en una manzana. Si es pequeña, te la puedes comer entera. Si es grande, la cortas en pedazos.",
+    s1p2: "La computadora hace lo mismo con las palabras. Las palabras cortas y comunes las deja enteras — como <i>gato</i>, o <i>perro</i>. Las palabras largas o poco comunes las corta en bocaditos más pequeños.",
+    s1note: '"Pruébalo tú mismo, querido — escribe una palabra larga y mira."',
+    s1label: "Escribe una frase aquí:",
+    s1ph: "como: fresas increíblemente sabrosas",
+    legWhole: "palabra entera",
+    legPiece: "pedacito",
+    legEnd: "terminación",
+    step2: "~ Paso 2 ~",
+    s2Title: "Cada pedacito recibe un número.",
+    s2p1: "Imagina una calle muy larga. Cada casa tiene un número — número 7, número 12, número 144 — para que el cartero sepa adónde ir.",
+    s2p2: "La computadora hace lo mismo. Cada pedacito de palabra recibe su propio número. Después de esto, la computadora ya no piensa en <i>letras</i>. Solo en números. Así es como le gusta pensar.",
+    step3: "~ Paso 3 ~",
+    s3Title: "Luego planta un jardín de significados.",
+    s3p1: "Y ahora viene la parte hermosa. Imagina un gran jardín. La computadora planta cada palabra en este jardín — y las palabras que <b>van juntas</b> se plantan una al lado de la otra.",
+    s3p2: "Los gatos crecen junto a los perros. El pan crece junto al queso. Las bicicletas crecen lejos de las fresas. Mira:",
+    s3p3: "Aprendió todo esto sola, simplemente leyendo y leyendo y leyendo. Las palabras que aparecen juntas a menudo terminan cerca unas de otras. Como pequeñas plantas a las que les gusta la misma tierra.",
+    step4: "~ Paso 4 ~",
+    s4Title: "Lo ordena todo por cualidades.",
+    s4p1: "¿Sabes cómo podrías ordenar el especiero? Por color. O por cuál es la más dulce. O por cuál es la más picante.",
+    s4p2: "La computadora hace lo mismo — pero con cientos de cualidades a la vez. Elige algo abajo y mira dónde queda según unas cuantas:",
+    s4note: '"Y la computadora de verdad usa miles de estas — no solo cuatro."',
+    qSmall: "pequeño", qBig: "grande",
+    qThing: "una cosa", qLiving: "un ser vivo",
+    qCold: "frío", qWarm: "cálido",
+    qSoft: "blando", qHard: "duro",
+    step5: "~ Paso 5 ~",
+    s5Title: "Y entonces — el truco de la receta.",
+    s5p1: "Cuando cocinas, a veces cambias un ingrediente. Tomas la receta del café con leche, le quitas la leche, le agregas leche de soya — y tienes café con leche de soya. La misma bebida, solo con un cambio.",
+    s5p2: "La computadora puede hacer esto con palabras. <b>De verdad cambia significados igual que tú cambias ingredientes.</b> Mira:",
+    s5p3: 'Toma "rey." Quítale la parte de "hombre." Pon la parte de "mujer." La respuesta es "reina." Nadie le dijo esto a la computadora — lo descubrió todo ella sola, simplemente leyendo.',
+    s5note: '"Como cambiar la mantequilla por aceite de oliva. La forma de la receta queda igual."',
+    closeP1: "Así que ese es todo el secreto. Cortar las palabras. Numerar los pedacitos. Plantar un jardín de significados. Ordenar por cualidad. Cambiar ingredientes.",
+    closeP2: "Cinco pequeños pasos. Hechos unos cuantos miles de veces. A lo largo de unos cuantos miles de millones de frases.",
+    closeP3: "Y sale una computadora que parece entenderte.",
+    signature: "— con cariño, desde la mesa de la cocina",
+    footer: "una pequeña lección · hecha con cariño",
+    keys: { animals: "animales", food: "cosas de la cocina", tech: "máquinas", flowers: "sentimientos", vehicles: "cosas que se mueven" },
+    rTitles: [
+      "una reina es solo un rey, pero mujer",
+      "Roma es solo París, pero en Italia",
+      "nadar es solo caminar, pero en el agua",
+      "más pequeño es solo más grande, pero al revés"
+    ]
   }
 };
 
 // ─── Garden words (positions tuned for clusters) ─────────
-// [en, nl, x, y, cluster]
+// [en, nl, es, x, y, cluster]
 const GARDEN = [
   // animals — top-left
-  ["cat","kat",110,90,"animals"],
-  ["dog","hond",170,80,"animals"],
-  ["mouse","muis",90,140,"animals"],
-  ["rabbit","konijn",155,140,"animals"],
-  ["bird","vogel",215,110,"animals"],
+  ["cat","kat","gato",110,90,"animals"],
+  ["dog","hond","perro",170,80,"animals"],
+  ["mouse","muis","ratón",90,140,"animals"],
+  ["rabbit","konijn","conejo",155,140,"animals"],
+  ["bird","vogel","pájaro",215,110,"animals"],
   // food / kitchen — left-mid
-  ["bread","brood",95,235,"food"],
-  ["cheese","kaas",165,230,"food"],
-  ["apple","appel",110,290,"food"],
-  ["soup","soep",195,280,"food"],
-  ["strawberry","aardbei",55,260,"food"],
+  ["bread","brood","pan",95,235,"food"],
+  ["cheese","kaas","queso",165,230,"food"],
+  ["apple","appel","manzana",110,290,"food"],
+  ["soup","soep","sopa",195,280,"food"],
+  ["strawberry","aardbei","fresa",55,260,"food"],
   // tech / machines — top-right
-  ["radio","radio",530,95,"tech"],
-  ["phone","telefoon",600,80,"tech"],
-  ["computer","computer",555,150,"tech"],
-  ["clock","klok",625,135,"tech"],
-  ["lamp","lamp",495,130,"tech"],
+  ["radio","radio","radio",530,95,"tech"],
+  ["phone","telefoon","teléfono",600,80,"tech"],
+  ["computer","computer","computadora",555,150,"tech"],
+  ["clock","klok","reloj",625,135,"tech"],
+  ["lamp","lamp","lámpara",495,130,"tech"],
   // emotions / flowers — center
-  ["happy","blij",335,195,"flowers"],
-  ["sad","verdrietig",375,225,"flowers"],
-  ["calm","rustig",315,245,"flowers"],
-  ["love","liefde",400,180,"flowers"],
-  ["scared","bang",290,210,"flowers"],
+  ["happy","blij","feliz",335,195,"flowers"],
+  ["sad","verdrietig","triste",375,225,"flowers"],
+  ["calm","rustig","tranquilo",315,245,"flowers"],
+  ["love","liefde","amor",400,180,"flowers"],
+  ["scared","bang","asustado",290,210,"flowers"],
   // vehicles — bottom
-  ["car","auto",250,395,"vehicles"],
-  ["bicycle","fiets",315,410,"vehicles"],
-  ["bus","bus",195,405,"vehicles"],
-  ["train","trein",380,395,"vehicles"],
-  ["boat","boot",450,410,"vehicles"]
+  ["car","auto","carro",250,395,"vehicles"],
+  ["bicycle","fiets","bicicleta",315,410,"vehicles"],
+  ["bus","bus","autobús",195,405,"vehicles"],
+  ["train","trein","tren",380,395,"vehicles"],
+  ["boat","boot","barco",450,410,"vehicles"]
 ];
 
 const KEY_COLORS = {
@@ -762,7 +815,8 @@ const Q_DATA = {
 };
 const Q_NAMES = {
   en: { cat: "cat", bread: "bread", ice: "ice", fire: "fire", bicycle: "bicycle", elephant: "elephant", flower: "flower" },
-  nl: { cat: "kat", bread: "brood", ice: "ijs", fire: "vuur", bicycle: "fiets", elephant: "olifant", flower: "bloem" }
+  nl: { cat: "kat", bread: "brood", ice: "ijs", fire: "vuur", bicycle: "fiets", elephant: "olifant", flower: "bloem" },
+  es: { cat: "gato", bread: "pan", ice: "hielo", fire: "fuego", bicycle: "bicicleta", elephant: "elefante", flower: "flor" }
 };
 
 // Recipe presets (vector arithmetic, but framed as recipes)
@@ -778,13 +832,19 @@ const RECIPES = {
     { a:"Parijs",   b:"Frankrijk", c:"Italië", r:"Rome" },
     { a:"lopend",   b:"lopen",   c:"zwemmen", r:"zwemmend" },
     { a:"groter",   b:"groot",   c:"klein",   r:"kleiner" }
+  ],
+  es: [
+    { a:"rey",      b:"hombre",  c:"mujer",   r:"reina" },
+    { a:"París",    b:"Francia", c:"Italia",  r:"Roma" },
+    { a:"caminando",b:"caminar", c:"nadar",   r:"nadando" },
+    { a:"más grande", b:"grande", c:"pequeño", r:"más pequeño" }
   ]
 };
 
 // ─── Apple slicing tokenizer ─────────────────────────────
-const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","cat","dog","big","small","good","bad","yes","no","de","het","een","en","of","maar","ik","jij","is","met","op","in","kat","hond","goed","slecht"]);
-const SUFFIXES = ["ing","ly","ed","est","er","tion","able","ness","ies","heid","lijk","baar","jes","ing","en"];
-const PREFIXES = ["un","re","pre","over","under","super","mis","on","ge","ver","be"];
+const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","cat","dog","big","small","good","bad","yes","no","de","het","een","en","of","maar","ik","jij","is","met","op","in","kat","hond","goed","slecht","el","la","los","las","del","que","y","un","una","es","son","soy","eres","somos","con","por","para","como","este","esta","esto","mi","tu","su","yo","tú","él","sí","no","gato","perro","grande","pequeño"]);
+const SUFFIXES = ["iendo","ables","ibles","íbles","mente","ción","sión","ando","idad","tion","heid","lijk","baar","able","ness","ies","ado","ido","ing","ly","ed","est","er","jes","en"];
+const PREFIXES = ["sobre","super","under","anti","over","pre","des","mis","un","re","ge","ver","be","im","in","on"];
 
 function slice(text) {
   const tokens = [];
@@ -830,7 +890,7 @@ function fakeId(s) {
   return Math.abs(h) % 49999 + 100;
 }
 
-const APPLE_DEFAULTS = { en: "unbelievable strawberries", nl: "ongelofelijke aardbeien" };
+const APPLE_DEFAULTS = { en: "unbelievable strawberries", nl: "ongelofelijke aardbeien", es: "fresas increíblemente sabrosas" };
 
 function renderApple() {
   const text = document.getElementById('appleInput').value || APPLE_DEFAULTS[currentLang];
@@ -871,7 +931,7 @@ function renderGarden() {
   html += '<rect width="700" height="460" filter="url(#paper)" opacity="0.6"/>';
   // Cluster halos as soft garden plots
   const clusters = {};
-  GARDEN.forEach(w => { (clusters[w[4]] ||= []).push([w[2], w[3]]); });
+  GARDEN.forEach(w => { (clusters[w[5]] ||= []).push([w[3], w[4]]); });
   Object.entries(clusters).forEach(([cname, pts]) => {
     const cx = pts.reduce((a,p)=>a+p[0],0)/pts.length;
     const cy = pts.reduce((a,p)=>a+p[1],0)/pts.length;
@@ -881,8 +941,8 @@ function renderGarden() {
   });
   // Plants — little leaf icons + word labels
   GARDEN.forEach(w => {
-    const [en, nl, x, y, c] = w;
-    const label = currentLang === 'en' ? en : nl;
+    const [en, nl, es, x, y, c] = w;
+    const label = { en, nl, es }[currentLang];
     const color = KEY_COLORS[c];
     // simple leaf as a rotated shape
     html += `<g>`;
@@ -961,7 +1021,7 @@ function renderRecipePicks() {
 }
 
 // ─── Language switching ───────────────────────────────────
-const SUPPORTED_LANGS = ['en', 'nl'];
+const SUPPORTED_LANGS = ['en', 'nl', 'es'];
 function langFromUrl() {
   const v = new URLSearchParams(location.search).get('lang');
   return SUPPORTED_LANGS.includes(v) ? v : 'en';

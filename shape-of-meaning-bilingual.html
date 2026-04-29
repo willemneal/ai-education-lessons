@@ -405,6 +405,7 @@ footer {
   <div class="lang-toggle" role="tablist">
     <button data-lang="en" class="active">EN</button>
     <button data-lang="nl">NL</button>
+    <button data-lang="es">ES</button>
   </div>
 </header>
 
@@ -460,12 +461,12 @@ footer {
   <div class="card">
     <div class="dim-demo">
       <select id="dimWord" class="dim-row">
-        <option value="cat" data-en="cat" data-nl="kat">cat</option>
-        <option value="elephant" data-en="elephant" data-nl="olifant">elephant</option>
-        <option value="rock" data-en="rock" data-nl="steen">rock</option>
-        <option value="fire" data-en="fire" data-nl="vuur">fire</option>
-        <option value="ice" data-en="ice" data-nl="ijs">ice</option>
-        <option value="bicycle" data-en="bicycle" data-nl="fiets">bicycle</option>
+        <option value="cat" data-en="cat" data-nl="kat" data-es="gato">cat</option>
+        <option value="elephant" data-en="elephant" data-nl="olifant" data-es="elefante">elephant</option>
+        <option value="rock" data-en="rock" data-nl="steen" data-es="piedra">rock</option>
+        <option value="fire" data-en="fire" data-nl="vuur" data-es="fuego">fire</option>
+        <option value="ice" data-en="ice" data-nl="ijs" data-es="hielo">ice</option>
+        <option value="bicycle" data-en="bicycle" data-nl="fiets" data-es="bicicleta">bicycle</option>
       </select>
       <div class="dim-row">
         <span class="label-l" data-i18n="dimSmall">small</span>
@@ -621,49 +622,93 @@ const I18N = {
     s7p2: "Er zit geen begrip in, in de menselijke zin. Geen plaatjes, geen herinneringen, geen gevoeld besef van wat <em>hond</em> is. Alleen meetkunde — opmerkelijk rijke, geleerd-uit-de-vorm-van-al-ons-schrijven meetkunde. En op de een of andere manier is dat genoeg.",
     footer: "de vorm van betekenis · een interactieve veldgids",
     mapClusters: { animals: "dieren", royalty: "koninklijk", food: "eten", tech: "technologie", emotions: "gevoelens", vehicles: "voertuigen" }
+  },
+  es: {
+    brand: "Una guía de campo para los curiosos",
+    kicker: "Una guía de campo · para los curiosos",
+    heroTitle: 'la forma del <em>significado</em>',
+    heroLede: 'Cómo los modelos de lenguaje convierten las palabras en puntos en el espacio — y por qué eso resulta ser casi todo.',
+    fig01: "Tokenizador",
+    s1Title: 'Primero, parte la frase en pedazos.',
+    s1p1: 'Antes de que el modelo pueda colocar las palabras en su mapa, tiene que decidir qué cuenta como una "palabra." La respuesta es incómoda: ni del todo palabras, ni del todo letras. Estos pedazos intermedios se llaman <strong>tokens</strong>.',
+    s1p2: "Las palabras comunes suelen ser un solo token. Las palabras raras se parten en varios. Pruébalo — escribe lo que quieras:",
+    s1ph: "Prueba: increíblemente, supercomputadora, hola mundo",
+    legendWhole: "palabra entera",
+    legendPiece: "pedazo de palabra",
+    legendEnd: "terminación",
+    legendOther: "otro",
+    fig02: "Los tokens se vuelven IDs",
+    s2Title: 'Cada token recibe un <em>ID</em>.',
+    s2p1: "Cada token tiene un ID — un número entre 0 y unos 100,000. El número en sí no significa nada todavía. Es solo una etiqueta para ese pedazo particular de texto. De aquí en adelante, el modelo trabaja con números, nunca con letras.",
+    fig03: "Un mapa de significado",
+    s3Title: 'Cientos de números se vuelven un <em>lugar</em>.',
+    s3p1: "El modelo busca el ID de cada token en una tabla enorme. Sale una larga lista de números — cientos, a veces miles, de largo. Esta lista es el <strong>vector</strong> del token, o su <em>embedding</em>. Piénsalo como coordenadas GPS: en la Tierra necesitas dos números para fijar una ubicación; en el mundo del significado, necesitas cientos.",
+    s3p2: "Esos vectores no son aleatorios. Cuando trazas todas las palabras usando sus vectores, se agrupan — la comida en un barrio, los animales en otro, las emociones en un tercero. Los modelos reales usan cientos de dimensiones, lo cual es imposible de dibujar. Aquí hay una versión plana, en dos dimensiones, para que puedas ver la forma:",
+    fig04: "Una dimensión a la vez",
+    s4Title: 'Cada número rastrea <em>una clase de significado</em>.',
+    s4p1: "Aquí viene la parte hermosa. Al modelo no se le dice qué deberían significar las dimensiones. Las descubre por su cuenta, viendo miles de millones de frases. Las dimensiones a menudo corresponden a cualidades <em>reales</em> — tamaño, género, temperatura, edad, formalidad. Elige una palabra y mira cómo se ubica a lo largo de unas dimensiones de muestra:",
+    s4p2: 'En un modelo real hay cientos de estos ejes, apilados juntos. Una sola palabra recibe una posición a lo largo de <em>todos</em> ellos a la vez. Así es como "reina" puede estar cerca de "rey" en la dimensión de la realeza y al mismo tiempo cerca de "mujer" en la dimensión de género — sin contradicción. El espacio es así de grande.',
+    dimSmall: "pequeño", dimBig: "grande",
+    dimDead: "no vivo", dimAlive: "vivo",
+    dimCold: "frío", dimWarm: "cálido",
+    dimSoft: "blando", dimHard: "duro",
+    fig05: "El truco mágico",
+    s5Title: 'Las relaciones se vuelven <em>direcciones</em>.',
+    s5p1: 'Una vez que las palabras viven en un mapa, las <em>relaciones</em> entre ellas se vuelven direcciones por las que puedes viajar. El paso que te lleva de <em>Francia</em> a <em>París</em> es más o menos el mismo paso que te lleva de <em>Italia</em> a <em>Roma</em>. La misma dirección. La misma distancia. El modelo aprendió "capital de" como una pequeña flecha que puedes sumar o restar. Esto te permite hacer aritmética con significados, lo cual suena imposible pero funciona:',
+    s5p2: 'Toma "rey," resta el significado de "hombre," suma el significado de "mujer" — y aterrizas en "reina." Nadie le dijo al modelo que "realeza más género" era una dirección. Lo aprendió leyendo miles de millones de frases, y la geometría simplemente encajó.',
+    fig06: "La escala real",
+    s6Title: '¿Qué tan grandes son los <em>vectores reales</em>?',
+    s6p1: "Nuestros ejemplos mostraron dos dimensiones. Los modelos reales usan muchas más. Cada barra de abajo está escalada para mostrar de cuántos números se compone el vector de un solo token:",
+    s6p2: 'Los modelos también difieren en cuántos tokens reconocen (su <em>vocabulario</em> — de 32K a 128K tokens únicos) y cuánto texto pueden leer de una vez (su <em>ventana de contexto</em> — desde 1K tokens en el primer GPT-2 hasta 10 millones en Llama 4 Scout).',
+    fig07: "Juntándolo todo",
+    s7Title: "Y eso es todo.",
+    s7p1: "Parte el texto en tokens. Convierte cada token en un vector de números. Usa los vectores para colocar las palabras en un mapa enorme donde la cercanía significa similitud de significado. Lee el resultado.",
+    s7p2: "No hay comprensión adentro, en el sentido humano. Sin imágenes, sin recuerdos, sin sensación de qué es un <em>perro</em>. Solo geometría — geometría notablemente rica, aprendida-de-la-forma-de-todo-lo-que-escribimos. Y de alguna manera, eso basta.",
+    footer: "la forma del significado · una guía de campo interactiva",
+    mapClusters: { animals: "animales", royalty: "realeza", food: "comida", tech: "tecnología", emotions: "emociones", vehicles: "vehículos" }
   }
 };
 
 // Map word data — positions are hand-tuned to form clusters.
-// Each entry: [en, nl, x, y, cluster]
+// Each entry: [en, nl, es, x, y, cluster]
 const MAP_WORDS = [
   // animals (top-left cluster)
-  ["cat","kat",110,90,"animals"],
-  ["dog","hond",165,75,"animals"],
-  ["lion","leeuw",90,140,"animals"],
-  ["tiger","tijger",145,135,"animals"],
-  ["mouse","muis",60,105,"animals"],
-  ["elephant","olifant",195,118,"animals"],
+  ["cat","kat","gato",110,90,"animals"],
+  ["dog","hond","perro",165,75,"animals"],
+  ["lion","leeuw","león",90,140,"animals"],
+  ["tiger","tijger","tigre",145,135,"animals"],
+  ["mouse","muis","ratón",60,105,"animals"],
+  ["elephant","olifant","elefante",195,118,"animals"],
   // royalty (top-right cluster)
-  ["king","koning",520,90,"royalty"],
-  ["queen","koningin",560,130,"royalty"],
-  ["prince","prins",605,75,"royalty"],
-  ["princess","prinses",625,140,"royalty"],
-  ["crown","kroon",560,55,"royalty"],
+  ["king","koning","rey",520,90,"royalty"],
+  ["queen","koningin","reina",560,130,"royalty"],
+  ["prince","prins","príncipe",605,75,"royalty"],
+  ["princess","prinses","princesa",625,140,"royalty"],
+  ["crown","kroon","corona",560,55,"royalty"],
   // food (left-mid cluster)
-  ["bread","brood",90,235,"food"],
-  ["pasta","pasta",150,255,"food"],
-  ["pizza","pizza",60,275,"food"],
-  ["cheese","kaas",125,295,"food"],
-  ["sushi","sushi",195,275,"food"],
+  ["bread","brood","pan",90,235,"food"],
+  ["pasta","pasta","pasta",150,255,"food"],
+  ["pizza","pizza","pizza",60,275,"food"],
+  ["cheese","kaas","queso",125,295,"food"],
+  ["sushi","sushi","sushi",195,275,"food"],
   // tech (right-mid cluster)
-  ["computer","computer",525,235,"tech"],
-  ["phone","telefoon",595,250,"tech"],
-  ["screen","scherm",565,290,"tech"],
-  ["app","app",625,225,"tech"],
-  ["internet","internet",495,275,"tech"],
+  ["computer","computer","computadora",525,235,"tech"],
+  ["phone","telefoon","teléfono",595,250,"tech"],
+  ["screen","scherm","pantalla",565,290,"tech"],
+  ["app","app","app",625,225,"tech"],
+  ["internet","internet","internet",495,275,"tech"],
   // emotions (center)
-  ["happy","blij",325,180,"emotions"],
-  ["sad","verdrietig",365,210,"emotions"],
-  ["angry","boos",295,215,"emotions"],
-  ["excited","opgewonden",355,160,"emotions"],
-  ["calm","rustig",315,235,"emotions"],
+  ["happy","blij","feliz",325,180,"emotions"],
+  ["sad","verdrietig","triste",365,210,"emotions"],
+  ["angry","boos","enojado",295,215,"emotions"],
+  ["excited","opgewonden","emocionado",355,160,"emotions"],
+  ["calm","rustig","tranquilo",315,235,"emotions"],
   // vehicles (bottom)
-  ["car","auto",265,375,"vehicles"],
-  ["bicycle","fiets",325,395,"vehicles"],
-  ["plane","vliegtuig",405,365,"vehicles"],
-  ["train","trein",370,400,"vehicles"],
-  ["boat","boot",455,385,"vehicles"]
+  ["car","auto","carro",265,375,"vehicles"],
+  ["bicycle","fiets","bicicleta",325,395,"vehicles"],
+  ["plane","vliegtuig","avión",405,365,"vehicles"],
+  ["train","trein","tren",370,400,"vehicles"],
+  ["boat","boot","barco",455,385,"vehicles"]
 ];
 
 const CLUSTER_COLORS = {
@@ -698,16 +743,22 @@ const PRESETS = {
     { a:"Parijs",   b:"Frankrijk",c:"Italië",r:"Rome" },
     { a:"lopend",   b:"lopen", c:"zwemmen", r:"zwemmend" },
     { a:"groter",   b:"groot", c:"klein", r:"kleiner" }
+  ],
+  es: [
+    { a:"rey",        b:"hombre", c:"mujer",   r:"reina" },
+    { a:"París",      b:"Francia",c:"Italia",  r:"Roma" },
+    { a:"caminando",  b:"caminar",c:"nadar",   r:"nadando" },
+    { a:"más grande", b:"grande", c:"pequeño", r:"más pequeño" }
   ]
 };
 
 // ─── Default example sentences per language ─────────────────
-const TOK_DEFAULTS = { en: 'unbelievable supercomputer', nl: 'ongelofelijke supercomputer' };
+const TOK_DEFAULTS = { en: 'unbelievable supercomputer', nl: 'ongelofelijke supercomputer', es: 'supercomputadora increíblemente compleja' };
 
 // ─── Tokenizer (toy) ────────────────────────────────────────
-const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","do","be","have","has","had","not","yes","no","hello","world","cat","dog","run","walk","big","small","good","bad","happy","sad","de","het","een","en","of","maar","ik","jij","wij","zij","is","ben","bent","zijn","was","waren","de","met","op","in","aan","voor","mijn","jouw","onze","hallo","wereld","kat","hond","ren","loop","groot","klein","goed","slecht","blij","verdrietig"]);
-const SUFFIXES = ["ing","ly","ed","est","er","tion","able","ness","ment","ish","ung","heid","lijk","baar"];
-const PREFIXES = ["un","re","pre","over","under","super","semi","sub","mis","on","ge","ver","be"];
+const COMMON = new Set(["the","a","an","is","are","was","were","i","you","we","they","he","she","it","and","or","but","to","of","in","on","at","for","with","as","this","that","my","your","do","be","have","has","had","not","yes","no","hello","world","cat","dog","run","walk","big","small","good","bad","happy","sad","de","het","een","en","of","maar","ik","jij","wij","zij","is","ben","bent","zijn","was","waren","de","met","op","in","aan","voor","mijn","jouw","onze","hallo","wereld","kat","hond","ren","loop","groot","klein","goed","slecht","blij","verdrietig","el","la","los","las","del","que","y","un","una","es","son","soy","eres","somos","con","por","para","como","este","esta","esto","mi","tu","su","yo","tú","él","sí","no","hola","mundo","gato","perro","grande","pequeño","feliz","triste"]);
+const SUFFIXES = ["iendo","ables","ibles","íbles","mente","ción","sión","ando","idad","tion","heid","lijk","baar","able","ness","ment","ado","ido","ing","ish","ung","ly","ed","est","er"];
+const PREFIXES = ["sobre","super","under","anti","over","semi","pre","des","sub","mis","un","re","ge","ver","be","im","in","on"];
 
 function tokenize(text) {
   const tokens = [];
@@ -795,9 +846,9 @@ function renderMap() {
   // Cluster halos (faint ellipses)
   const clusters = {};
   MAP_WORDS.forEach(w => {
-    const c = w[4];
+    const c = w[5];
     if (!clusters[c]) clusters[c] = [];
-    clusters[c].push([w[2], w[3]]);
+    clusters[c].push([w[3], w[4]]);
   });
   Object.entries(clusters).forEach(([cname, pts]) => {
     const cx = pts.reduce((a,p)=>a+p[0],0)/pts.length;
@@ -807,8 +858,8 @@ function renderMap() {
   });
   // Word dots + labels
   MAP_WORDS.forEach(w => {
-    const [en, nl, x, y, c] = w;
-    const label = currentLang === 'en' ? en : nl;
+    const [en, nl, es, x, y, c] = w;
+    const label = { en, nl, es }[currentLang];
     html += `<g><circle cx="${x}" cy="${y}" r="3.5" fill="${CLUSTER_COLORS[c]}" opacity="0.95"/>`;
     html += `<text x="${x+8}" y="${y+4}" font-family="Lora, serif" font-size="13" fill="#f3e8d2">${label}</text></g>`;
   });
@@ -832,7 +883,8 @@ function renderDims() {
   data.forEach((v, i) => {
     const m = document.getElementById(ids[i]);
     m.style.left = v + '%';
-    m.textContent = (currentLang === 'en' ? w : (document.querySelector(`#dimWord option[value="${w}"]`).dataset.nl));
+    const opt = document.querySelector(`#dimWord option[value="${w}"]`);
+    m.textContent = opt.dataset[currentLang] || w;
   });
 }
 
@@ -898,7 +950,7 @@ function renderScale() {
 }
 
 // ─── Language switching ─────────────────────────────────────
-const SUPPORTED_LANGS = ['en', 'nl'];
+const SUPPORTED_LANGS = ['en', 'nl', 'es'];
 function langFromUrl() {
   const v = new URLSearchParams(location.search).get('lang');
   return SUPPORTED_LANGS.includes(v) ? v : 'en';
@@ -936,7 +988,7 @@ function setLang(lang) {
   });
   // Translate dim-word options
   document.querySelectorAll('#dimWord option').forEach(o => {
-    o.textContent = lang === 'en' ? o.dataset.en : o.dataset.nl;
+    o.textContent = o.dataset[lang] || o.dataset.en;
   });
   // Re-render dynamic bits
   renderTokens();
